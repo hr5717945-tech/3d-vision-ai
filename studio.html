@@ -3,306 +3,110 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090b1c">
-<meta name="description" content="3D Vision AI — free browser-based image enhancement and 3D studio.">
+<meta name="description" content="3D Vision AI image enhancer and 3D studio">
 <title>3D Vision AI Studio</title>
 
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
 <style>
 :root {
-  --bg: #090b1c;
-  --panel: rgba(22, 26, 55, .88);
-  --cyan: #00f5ff;
-  --pink: #ff38d1;
-  --purple: #a855ff;
-  --lime: #c8ff42;
-  --text: #f7f8ff;
-  --muted: #b9c0df;
+  --bg:#090b1c;
+  --panel:rgba(22,26,55,.9);
+  --cyan:#00f5ff;
+  --pink:#ff38d1;
+  --purple:#a855ff;
+  --lime:#c8ff42;
+  --text:#f7f8ff;
+  --muted:#b9c0df;
 }
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
   background:
-    radial-gradient(ellipse at 10% 5%, #33206f 0, transparent 35%),
-    radial-gradient(ellipse at 95% 15%, #083f59 0, transparent 32%),
-    radial-gradient(ellipse at 50% 100%, #471448 0, transparent 35%),
+    radial-gradient(ellipse at 10% 5%,#33206f,transparent 35%),
+    radial-gradient(ellipse at 95% 15%,#083f59,transparent 32%),
+    radial-gradient(ellipse at 50% 100%,#471448,transparent 35%),
     var(--bg);
 }
-
-header {
-  text-align: center;
-  padding: 30px 16px 22px;
+header{text-align:center;padding:30px 16px 22px}
+.logo{
+  display:inline-block;font-size:clamp(28px,7vw,46px);
+  font-weight:900;letter-spacing:-1.5px;
+  background:linear-gradient(90deg,var(--cyan),white,var(--pink),var(--lime));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 15px #00eaff55);
 }
-
-.logo {
-  display: inline-block;
-  font-size: clamp(28px, 7vw, 46px);
-  font-weight: 900;
-  letter-spacing: -1.5px;
-  background: linear-gradient(90deg, var(--cyan), #ffffff, var(--pink), var(--lime));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 15px #00eaff55);
+header p{color:var(--muted);margin:10px auto 0;line-height:1.6;max-width:560px}
+.pill{
+  display:inline-block;padding:7px 12px;border:1px solid #00f5ff66;
+  border-radius:50px;background:#00f5ff12;color:var(--cyan);
+  font-size:12px;font-weight:bold;margin-bottom:12px;
 }
-
-header p {
-  color: var(--muted);
-  margin: 10px auto 0;
-  line-height: 1.6;
-  max-width: 560px;
+main{width:min(100% - 24px,1050px);margin:auto;padding-bottom:35px}
+.panel{
+  background:var(--panel);border:1px solid #a855ff66;border-radius:22px;
+  padding:20px;margin:18px 0;box-shadow:0 0 28px #812cff18;
+  backdrop-filter:blur(14px);
 }
-
-.pill {
-  display: inline-block;
-  padding: 7px 12px;
-  border: 1px solid #00f5ff66;
-  border-radius: 50px;
-  background: #00f5ff12;
-  color: var(--cyan);
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 12px;
+.panel h2{margin:0 0 8px;font-size:23px}
+.accent{
+  background:linear-gradient(90deg,var(--cyan),var(--pink));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-main {
-  width: min(100% - 24px, 1050px);
-  margin: auto;
-  padding-bottom: 35px;
+.description{color:var(--muted);line-height:1.6;font-size:14px;margin:8px 0 18px}
+.upload{
+  display:block;width:100%;padding:18px 12px;text-align:center;
+  border:2px dashed #00f5ff99;background:#00f5ff09;
+  border-radius:15px;color:var(--cyan);margin:15px 0;
 }
-
-.panel {
-  background: var(--panel);
-  border: 1px solid #a855ff66;
-  border-radius: 22px;
-  padding: 20px;
-  margin: 18px 0;
-  box-shadow: 0 0 28px #812cff18, inset 0 0 20px #00eaff06;
-  backdrop-filter: blur(14px);
+input[type=file]{display:block;width:100%;margin-top:12px;color:var(--muted);font-size:13px}
+input[type=file]::file-selector-button{
+  border:0;padding:10px 12px;border-radius:9px;
+  background:linear-gradient(90deg,var(--cyan),#80ffe7);
+  color:#08101c;font-weight:bold;margin-right:10px;
 }
-
-.panel h2 {
-  margin: 0 0 8px;
-  font-size: 23px;
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:18px 0}
+.control{padding:14px;border:1px solid #ffffff16;background:#ffffff06;border-radius:14px}
+.control label{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:bold;margin-bottom:12px}
+.control output{color:var(--cyan)}
+input[type=range]{width:100%;accent-color:var(--pink);cursor:pointer}
+select,input[type=url]{
+  width:100%;padding:13px;border-radius:10px;
+  border:1px solid #a855ff77;background:#11142c;color:white;outline:none;
 }
-
-.accent {
-  background: linear-gradient(90deg, var(--cyan), var(--pink));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button{
+  border:0;border-radius:12px;padding:13px 17px;
+  font-size:14px;font-weight:800;cursor:pointer;transition:transform .15s;
 }
-
-.description {
-  color: var(--muted);
-  line-height: 1.6;
-  font-size: 14px;
-  margin: 8px 0 18px;
+button:active{transform:scale(.97)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.primary{flex:1 1 180px;color:#08101c;background:linear-gradient(100deg,var(--cyan),#66ffcf);box-shadow:0 0 18px #00f5ff30}
+.pink{flex:1 1 140px;color:white;background:linear-gradient(100deg,#a855ff,var(--pink));box-shadow:0 0 18px #ff38d130}
+.secondary{flex:1 1 120px;color:white;background:#25294c;border:1px solid #ffffff20}
+button:hover{filter:brightness(1.12)}
+.previews{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:20px}
+.preview{min-width:0;border-radius:15px;overflow:hidden;border:1px solid #ffffff20;background:#080a17}
+.preview h3{margin:0;padding:12px;font-size:13px;color:var(--cyan);border-bottom:1px solid #ffffff12}
+.preview img{display:block;width:100%;max-height:390px;object-fit:contain;min-height:130px}
+.empty{min-height:160px;display:grid;place-items:center;padding:20px;color:#7d85aa;font-size:13px;text-align:center}
+.status{padding:12px;margin-top:14px;background:#ffffff08;border-radius:10px;color:var(--lime);font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+model-viewer{
+  width:100%;height:360px;margin-top:15px;
+  background:radial-gradient(circle,#20254b,#090b1c);
+  border:1px solid #00f5ff55;border-radius:16px;
 }
-
-.upload {
-  display: block;
-  width: 100%;
-  padding: 18px 12px;
-  text-align: center;
-  border: 2px dashed #00f5ff99;
-  background: #00f5ff09;
-  border-radius: 15px;
-  color: var(--cyan);
-  margin: 15px 0;
-}
-
-input[type="file"] {
-  display: block;
-  width: 100%;
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-input[type="file"]::file-selector-button {
-  border: 0;
-  padding: 10px 12px;
-  border-radius: 9px;
-  background: linear-gradient(90deg, var(--cyan), #80ffe7);
-  color: #08101c;
-  font-weight: bold;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.controls {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
-  margin: 18px 0;
-}
-
-.control {
-  padding: 14px;
-  border: 1px solid #ffffff16;
-  background: #ffffff06;
-  border-radius: 14px;
-}
-
-.control label {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-.control output { color: var(--cyan); }
-
-input[type="range"] {
-  width: 100%;
-  accent-color: var(--pink);
-  cursor: pointer;
-}
-
-select, input[type="url"], input[type="text"] {
-  width: 100%;
-  padding: 13px;
-  border-radius: 10px;
-  border: 1px solid #a855ff77;
-  background: #11142c;
-  color: white;
-  outline: none;
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-button {
-  border: 0;
-  border-radius: 12px;
-  padding: 13px 17px;
-  font-size: 14px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: transform .15s, filter .15s;
-}
-
-button:active { transform: scale(.97); }
-
-.primary {
-  flex: 1 1 180px;
-  color: #08101c;
-  background: linear-gradient(100deg, var(--cyan), #66ffcf);
-  box-shadow: 0 0 18px #00f5ff30;
-}
-
-.pink {
-  flex: 1 1 140px;
-  color: white;
-  background: linear-gradient(100deg, #a855ff, var(--pink));
-  box-shadow: 0 0 18px #ff38d130;
-}
-
-.secondary {
-  flex: 1 1 120px;
-  color: white;
-  background: #25294c;
-  border: 1px solid #ffffff20;
-}
-
-button:hover { filter: brightness(1.12); }
-
-.previews {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
-  margin-top: 20px;
-}
-
-.preview {
-  min-width: 0;
-  border-radius: 15px;
-  overflow: hidden;
-  border: 1px solid #ffffff20;
-  background: #080a17;
-}
-
-.preview h3 {
-  margin: 0;
-  padding: 12px;
-  font-size: 13px;
-  color: var(--cyan);
-  border-bottom: 1px solid #ffffff12;
-}
-
-.preview img {
-  display: block;
-  width: 100%;
-  max-height: 390px;
-  object-fit: contain;
-  min-height: 130px;
-}
-
-.empty {
-  min-height: 160px;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  color: #7d85aa;
-  font-size: 13px;
-  text-align: center;
-}
-
-.status {
-  padding: 12px;
-  margin-top: 14px;
-  background: #ffffff08;
-  border-radius: 10px;
-  color: var(--lime);
-  font-size: 13px;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-
-model-viewer {
-  width: 100%;
-  height: 360px;
-  margin-top: 15px;
-  background: radial-gradient(circle, #20254b, #090b1c);
-  border: 1px solid #00f5ff55;
-  border-radius: 16px;
-}
-
-.note {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.6;
-  margin-top: 14px;
-}
-
-footer {
-  text-align: center;
-  color: #8991b6;
-  font-size: 12px;
-  padding: 18px;
-}
-
-.hidden { display: none !important; }
-
-@media (max-width: 480px) {
-  .panel { padding: 15px; border-radius: 17px; }
-  header { padding-top: 24px; }
-  .controls { grid-template-columns: 1fr; }
-  model-viewer { height: 290px; }
+.note{color:var(--muted);font-size:12px;line-height:1.6;margin-top:14px}
+footer{text-align:center;color:#8991b6;font-size:12px;padding:18px}
+.hidden{display:none!important}
+@media(max-width:480px){
+  .panel{padding:15px;border-radius:17px}
+  header{padding-top:24px}
+  .controls{grid-template-columns:1fr}
+  model-viewer{height:290px}
 }
 </style>
 </head>
@@ -315,104 +119,91 @@ footer {
 </header>
 
 <main>
-  <section class="panel">
-    <h2>🌈 <span class="accent">Image Enhancement Studio</span></h2>
-    <p class="description">Upload a photo and adjust its colors, contrast, sharpness and output resolution. Processing happens in your browser.</p>
+<section class="panel">
+  <h2>🌈 <span class="accent">Image Enhancement Studio</span></h2>
+  <p class="description">Upload a photo and adjust colors, contrast, brightness, sharpness and export resolution.</p>
 
-    <div class="upload">
-      <strong>📸 Choose your image</strong>
-      <input id="imageInput" type="file" accept="image/*">
-    </div>
+  <div class="upload">
+    <strong>📸 Choose your image</strong>
+    <input id="imageInput" type="file" accept="image/*">
+  </div>
 
-    <div class="controls">
-      <div class="control">
-        <label for="vibrance">🌈 Color vibrance <output id="vibranceValue">150%</output></label>
-        <input id="vibrance" type="range" min="50" max="200" value="150">
-      </div>
-
-      <div class="control">
-        <label for="contrast">✨ Contrast <output id="contrastValue">115%</output></label>
-        <input id="contrast" type="range" min="80" max="160" value="115">
-      </div>
-
-      <div class="control">
-        <label for="brightness">☀️ Brightness <output id="brightnessValue">105%</output></label>
-        <input id="brightness" type="range" min="70" max="140" value="105">
-      </div>
-
-      <div class="control">
-        <label for="sharpness">🔍 Sharpness <output id="sharpnessValue">1</output></label>
-        <input id="sharpness" type="range" min="0" max="3" step="0.5" value="1">
-      </div>
-
-      <div class="control">
-        <label for="resolution">🖼️ Output resolution</label>
-        <select id="resolution">
-          <option value="original">Original resolution</option>
-          <option value="2560">2K — longest side 2560 px</option>
-          <option value="3840">4K — longest side 3840 px</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button class="primary" id="enhanceBtn">✨ Enhance Image</button>
-      <button class="pink" id="downloadBtn" disabled>⬇ Download PNG</button>
-      <button class="secondary" id="resetBtn">↺ Reset settings</button>
-    </div>
-
-    <div class="previews">
-      <div class="preview">
-        <h3>ORIGINAL IMAGE</h3>
-        <div id="originalEmpty" class="empty">Your original photo will appear here.</div>
-        <img id="originalPreview" class="hidden" alt="Original image preview">
-      </div>
-      <div class="preview">
-        <h3>ENHANCED RESULT</h3>
-        <div id="resultEmpty" class="empty">Your enhanced image will appear here.</div>
-        <img id="resultPreview" class="hidden" alt="Enhanced image preview">
-      </div>
-    </div>
-
-    <div id="imageStatus" class="status" role="status">Ready — choose an image to get started.</div>
-    <p class="note">Note: This free tool adjusts existing image pixels; it does not use an AI model to invent missing details. 4K export depends on your device's memory and the source image quality.</p>
-  </section>
-
-  <section class="panel">
-    <h2>🧊 <span class="accent">Image to 3D Studio</span></h2>
-    <p class="description">Choose an image and send it to your connected 3D generation backend. Preview a returned 3D model here.</p>
-
-    <div class="upload">
-      <strong>🪄 Choose an image for 3D</strong>
-      <input id="modelImageInput" type="file" accept="image/*">
-    </div>
-
+  <div class="controls">
     <div class="control">
-      <label for="backendUrl">Backend API URL</label>
-      <input id="backendUrl" type="url" placeholder="https://your-backend.example.com">
-      <p class="note">Enter the public URL of your running backend. GitHub Pages alone cannot run Python or generate 3D models.</p>
+      <label for="vibrance">🌈 Color vibrance <output id="vibranceValue">150%</output></label>
+      <input id="vibrance" type="range" min="50" max="200" value="150">
     </div>
-
-    <div class="buttons">
-      <button class="pink" id="generate3DBtn">🚀 Generate 3D Model</button>
+    <div class="control">
+      <label for="contrast">✨ Contrast <output id="contrastValue">115%</output></label>
+      <input id="contrast" type="range" min="80" max="160" value="115">
     </div>
-
-    <div id="modelStatus" class="status" role="status">Your 3D generator needs a connected backend to create models.</div>
-
-    <model-viewer
-      id="modelViewer"
-      class="hidden"
-      camera-controls
-      auto-rotate
-      shadow-intensity="1"
-      exposure="1"
-      alt="Generated 3D model">
-    </model-viewer>
-
-    <div class="buttons">
-      <a id="modelDownloadLink" class="hidden" download="3d-model.glb" style="color:#00f5ff; padding:12px;">⬇ Download 3D model</a>
+    <div class="control">
+      <label for="brightness">☀️ Brightness <output id="brightnessValue">105%</output></label>
+      <input id="brightness" type="range" min="70" max="140" value="105">
     </div>
-  </section>
+    <div class="control">
+      <label for="sharpness">🔍 Sharpness <output id="sharpnessValue">1</output></label>
+      <input id="sharpness" type="range" min="0" max="3" step="0.5" value="1">
+    </div>
+    <div class="control">
+      <label for="resolution">🖼️ Output resolution</label>
+      <select id="resolution">
+        <option value="original">Original resolution</option>
+        <option value="2560">2K — longest side 2560 px</option>
+        <option value="3840">4K UHD — 3840 × 2160 for 16:9 images</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="primary" id="enhanceBtn">✨ Enhance Image</button>
+    <button class="pink" id="downloadBtn" disabled>⬇ Download PNG</button>
+    <button class="secondary" id="resetBtn">↺ Reset settings</button>
+  </div>
+
+  <div class="previews">
+    <div class="preview">
+      <h3>ORIGINAL IMAGE</h3>
+      <div id="originalEmpty" class="empty">Your original photo will appear here.</div>
+      <img id="originalPreview" class="hidden" alt="Original image preview">
+    </div>
+    <div class="preview">
+      <h3>ENHANCED RESULT</h3>
+      <div id="resultEmpty" class="empty">Your enhanced image will appear here.</div>
+      <img id="resultPreview" class="hidden" alt="Enhanced image preview">
+    </div>
+  </div>
+
+  <div id="imageStatus" class="status" role="status">Ready — choose an image to get started.</div>
+  <p class="note">The enhancer runs locally in your browser and does not require a paid SDK. It adjusts image pixels but does not use AI to reconstruct missing detail. Large exports may be slow on some phones.</p>
+</section>
+
+<section class="panel">
+  <h2>🧊 <span class="accent">Image to 3D Studio</span></h2>
+  <p class="description">Connect your hosted 3D backend to generate and preview a 3D model.</p>
+
+  <div class="upload">
+    <strong>🪄 Choose an image for 3D</strong>
+    <input id="modelImageInput" type="file" accept="image/*">
+  </div>
+
+  <div class="control">
+    <label for="backendUrl">Backend API URL</label>
+    <input id="backendUrl" type="url" placeholder="https://your-backend.example.com">
+    <p class="note">GitHub Pages cannot run a Python backend by itself. Enter your hosted backend URL here.</p>
+  </div>
+
+  <div class="buttons">
+    <button class="pink" id="generate3DBtn">🚀 Generate 3D Model</button>
+  </div>
+
+  <div id="modelStatus" class="status" role="status">Connect your running backend to generate a model.</div>
+
+  <model-viewer id="modelViewer" class="hidden" camera-controls auto-rotate shadow-intensity="1" exposure="1" alt="Generated 3D model"></model-viewer>
+  <div class="buttons">
+    <a id="modelDownloadLink" class="hidden" download="3d-model.glb" style="color:#00f5ff;padding:12px">⬇ Download 3D model</a>
+  </div>
+</section>
 </main>
 
 <footer>© 2026 3D Vision AI · Made for creative minds ✦</footer>
@@ -472,7 +263,7 @@ imageInput.addEventListener("change", () => {
   if (sourceObjectUrl) URL.revokeObjectURL(sourceObjectUrl);
   sourceObjectUrl = URL.createObjectURL(file);
   clearResult();
-  imageStatus.textContent = "Loading your image...";
+  imageStatus.textContent = "Loading image...";
 
   const img = new Image();
 
@@ -483,12 +274,12 @@ imageInput.addEventListener("change", () => {
     originalEmpty.classList.add("hidden");
     imageStatus.textContent =
       "Image loaded: " + img.naturalWidth + " × " + img.naturalHeight +
-      " pixels. Adjust the settings and tap Enhance Image.";
+      ". Choose settings and tap Enhance Image.";
   };
 
   img.onerror = () => {
     sourceImage = null;
-    imageStatus.textContent = "This image could not be opened. Please try another file.";
+    imageStatus.textContent = "Could not open this image. Please try another file.";
   };
 
   img.src = sourceObjectUrl;
@@ -511,8 +302,9 @@ function sharpenCanvas(ctx, width, height, amount) {
       const right = i + 4;
 
       for (let c = 0; c < 3; c++) {
-        output[i + c] = src[i + c] * (1 + 4 * strength)
-          - strength * (
+        output[i + c] =
+          src[i + c] * (1 + 4 * strength) -
+          strength * (
             src[up + c] + src[down + c] +
             src[left + c] + src[right + c]
           );
@@ -544,7 +336,7 @@ enhanceBtn.addEventListener("click", async () => {
   processing = true;
   enhanceBtn.disabled = true;
   downloadBtn.disabled = true;
-  imageStatus.textContent = "Enhancing your image... Please wait.";
+  imageStatus.textContent = "Enhancing image... Please wait.";
 
   try {
     let width = sourceImage.naturalWidth;
@@ -554,18 +346,14 @@ enhanceBtn.addEventListener("click", async () => {
     if (requested !== "original") {
       const longestSide = Number(requested);
       const scale = longestSide / Math.max(width, height);
-
-      if (scale > 1) {
-        width = Math.round(width * scale);
-        height = Math.round(height * scale);
-      } else {
-        width = Math.round(width * scale);
-        height = Math.round(height * scale);
-      }
+      width = Math.max(1, Math.round(width * scale));
+      height = Math.max(1, Math.round(height * scale));
     }
 
-    // Keep processing within a phone-friendly memory limit.
-    const maxPixels = 12000000;
+    // Allow up to 18 megapixels for higher-resolution output.
+    // The browser may still impose its own canvas memory limits.
+    const maxPixels = 18000000;
+
     if (width * height > maxPixels) {
       const safeScale = Math.sqrt(maxPixels / (width * height));
       width = Math.max(1, Math.floor(width * safeScale));
@@ -576,8 +364,8 @@ enhanceBtn.addEventListener("click", async () => {
     canvas.width = width;
     canvas.height = height;
 
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    if (!ctx) throw new Error("Your browser could not start image processing.");
+    const ctx = canvas.getContext("2d", {willReadFrequently:true});
+    if (!ctx) throw new Error("Could not start image processing.");
 
     ctx.filter =
       "saturate(" + (Number(vibrance.value) / 100) + ") " +
@@ -599,11 +387,13 @@ enhanceBtn.addEventListener("click", async () => {
     downloadBtn.disabled = false;
 
     imageStatus.textContent =
-      "Enhancement complete! Output: " + width + " × " + height +
-      " pixels. File size: " + (resultBlob.size / 1024 / 1024).toFixed(2) + " MB.";
+      "Done! Output: " + width + " × " + height +
+      " pixels (" + (width * height / 1000000).toFixed(1) +
+      " MP). PNG size: " + (resultBlob.size / 1024 / 1024).toFixed(2) + " MB.";
   } catch (error) {
-    imageStatus.textContent = "Enhancement failed: " + error.message +
-      " Try a smaller image or reduce the output resolution.";
+    imageStatus.textContent =
+      "Enhancement failed: " + error.message +
+      " Try a smaller photo or lower resolution.";
   } finally {
     processing = false;
     enhanceBtn.disabled = false;
@@ -628,12 +418,9 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   sharpness.value = 1;
   resolution.value = "original";
   updateLabels();
-
-  if (sourceImage) {
-    imageStatus.textContent = "Settings reset. Tap Enhance Image to create a new result.";
-  } else {
-    imageStatus.textContent = "Settings reset — choose an image to get started.";
-  }
+  imageStatus.textContent = sourceImage
+    ? "Settings reset. Tap Enhance Image to process again."
+    : "Settings reset — choose an image to get started.";
 });
 
 const modelImageInput = document.getElementById("modelImageInput");
@@ -642,20 +429,17 @@ const modelStatus = document.getElementById("modelStatus");
 const modelViewer = document.getElementById("modelViewer");
 const modelDownloadLink = document.getElementById("modelDownloadLink");
 
-let generatedModelUrl = null;
-
 generate3DBtn.addEventListener("click", async () => {
   const file = modelImageInput.files && modelImageInput.files[0];
   const backendInput = document.getElementById("backendUrl").value.trim();
 
   if (!file) {
-    modelStatus.textContent = "Please choose an image for 3D generation.";
+    modelStatus.textContent = "Choose an image for 3D generation first.";
     return;
   }
 
   if (!backendInput) {
-    modelStatus.textContent =
-      "Enter your running backend's public URL first. GitHub Pages cannot run the 3D generation backend by itself.";
+    modelStatus.textContent = "Enter your hosted backend URL first. GitHub Pages cannot run the 3D backend alone.";
     return;
   }
 
@@ -667,12 +451,12 @@ generate3DBtn.addEventListener("click", async () => {
     }
     endpoint.pathname = endpoint.pathname.replace(/\/+$/, "") + "/generate";
   } catch {
-    modelStatus.textContent = "Please enter a valid backend URL, including https://.";
+    modelStatus.textContent = "Enter a valid backend URL, including https://.";
     return;
   }
 
   generate3DBtn.disabled = true;
-  modelStatus.textContent = "Uploading your image to the backend...";
+  modelStatus.textContent = "Uploading image to your backend...";
 
   try {
     const formData = new FormData();
@@ -691,20 +475,19 @@ generate3DBtn.addEventListener("click", async () => {
     const returnedUrl = data.model_url || data.glb_url || data.url;
 
     if (!returnedUrl) {
-      throw new Error("No model URL found in the backend response.");
+      throw new Error("Backend response did not contain a model URL.");
     }
 
     const modelUrl = new URL(returnedUrl, endpoint.href).href;
     modelViewer.src = modelUrl;
     modelViewer.classList.remove("hidden");
-
     modelDownloadLink.href = modelUrl;
     modelDownloadLink.classList.remove("hidden");
-    modelStatus.textContent = "Model received! You can rotate and zoom it above.";
+    modelStatus.textContent = "Model received! Rotate and zoom it in the viewer.";
   } catch (error) {
     modelStatus.textContent =
-      "Could not generate the model: " + error.message +
-      ". Check that your backend is running, allows browser requests (CORS), and returns a model URL.";
+      "Generation failed: " + error.message +
+      ". Check your backend URL, CORS settings and API response format.";
   } finally {
     generate3DBtn.disabled = false;
   }
