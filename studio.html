@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Vision AI | Image to 3D Studio</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;color:#f8fafc;
+ background:radial-gradient(ellipse at top,#312e81 0%,#111827 48%,#080b16 100%);
+ min-height:100vh
+}
+header{
+ display:flex;align-items:center;justify-content:space-between;
+ padding:22px 7%;border-bottom:1px solid #ffffff18
+}
+.logo{font-size:21px;font-weight:800;letter-spacing:1px}
+.logo span{color:#a78bfa}
+.tag{color:#c4b5fd;font-size:12px}
+main{max-width:950px;margin:auto;padding:48px 18px}
+.hero{text-align:center;margin-bottom:35px}
+.pill{
+ display:inline-block;padding:9px 15px;border:1px solid #8b5cf6;
+ border-radius:30px;color:#ddd6fe;background:#8b5cf620;font-size:13px
+}
+h1{font-size:clamp(34px,7vw,58px);line-height:1.1;margin:22px 0}
+h1 span{
+ background:linear-gradient(90deg,#c4b5fd,#60a5fa);
+ -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.subtitle{color:#cbd5e1;line-height:1.8;max-width:600px;margin:0 auto}
+.panel{
+ background:#ffffff0b;border:1px solid #ffffff20;border-radius:22px;
+ padding:25px;box-shadow:0 20px 60px #0003;backdrop-filter:blur(12px)
+}
+h2{font-size:21px;margin-top:0}
+.description{color:#aebbd0;font-size:14px;line-height:1.7}
+.upload{
+ display:block;border:2px dashed #8b5cf6;border-radius:16px;
+ padding:25px 12px;text-align:center;background:#8b5cf610;
+ margin:20px 0
+}
+.upload strong{display:block;margin:10px 0}
+input[type=file]{width:100%;margin-top:12px;color:#cbd5e1}
+#preview{max-width:100%;max-height:240px;object-fit:contain;border-radius:12px;margin-top:15px}
+button{
+ border:0;border-radius:12px;padding:15px 20px;font-size:15px;
+ font-weight:bold;cursor:pointer;color:white;
+ background:linear-gradient(100deg,#7c3aed,#2563eb);width:100%;
+ box-shadow:0 8px 25px #4f46e550
+}
+button:disabled{opacity:.55;cursor:wait}
+#status{color:#c4b5fd;text-align:center;line-height:1.6;font-size:14px}
+model-viewer{
+ width:100%;height:350px;background:#111827;border-radius:15px;
+ margin-top:15px
+}
+.download{display:block;text-align:center;color:#c4b5fd;margin:18px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.feature{background:#ffffff08;border:1px solid #ffffff15;padding:16px;border-radius:14px}
+.feature b{display:block;margin-bottom:8px;font-size:14px}
+.feature p{font-size:12px;color:#aebbd0;line-height:1.6;margin-bottom:0}
+footer{text-align:center;padding:30px;color:#94a3b8;font-size:12px}
+@media(max-width:560px){
+ main{padding:35px 14px}
+ .panel{padding:18px}
+ .features{grid-template-columns:1fr}
+ header{padding:18px}
+}
+
+#particle-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+body{position:relative;isolation:isolate}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 20%,#6d28d933,transparent 42%),radial-gradient(ellipse at 85% 65%,#2563eb30,transparent 45%)}
+</style>
+</head>
+<body>
+<canvas id="particle-bg" aria-hidden="true"></canvas>
+<script>
+(()=>{
+const c=document.getElementById("particle-bg"),ctx=c.getContext("2d");
+if(!ctx)return;
+let w,h,particles=[],dpr=1;
+function resize(){
+dpr=Math.min(window.devicePixelRatio||1,1.5);
+w=innerWidth;h=innerHeight;c.width=w*dpr;c.height=h*dpr;
+c.style.width=w+"px";c.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
+const count=Math.min(180,Math.max(100,Math.floor(w*h/5000)));
+particles=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.8+1.2,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,a:Math.random()*.8+.4,hue:Math.random()>.5?255:195}));
+}
+function draw(){
+ctx.clearRect(0,0,w,h);
+for(let i=0;i<particles.length;i++){
+const p=particles[i];p.x+=p.vx;p.y+=p.vy;
+if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="hsla("+p.hue+",100%,75%,"+p.a+")";ctx.shadowBlur=18;ctx.shadowColor="hsla("+p.hue+",100%,65%,0.7)";ctx.fill();ctx.shadowBlur=0;
+for(let j=i+1;j<particles.length;j++){
+const q=particles[j],dx=p.x-q.x,dy=p.y-q.y,dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<140){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle="rgba(139,120,255,"+(.28*(1-dist/140))+")";ctx.stroke();}
+}
+}
+requestAnimationFrame(draw);
+}
+resize();window.addEventListener("resize",resize);draw();
+})();
+</script>
+
+<header>
+ <div class="logo">✦ 3D <span>VISION AI</span></div>
+ <div class="tag">IMAGE TO 3D STUDIO</div>
+</header>
+<main>
+ <section class="hero">
+  <div class="pill">✧ YOUR CREATIVE AI WORKSPACE</div>
+  <h1>Turn Images Into<br><span>3D Experiences</span></h1>
+  <p class="subtitle">Bring your ideas to life. Upload an image, generate a 3D model, explore it in your browser, and download your creation.</p>
+ </section>
+
+ <section class="panel">
+  <h2>✦ Create Your 3D Model</h2>
+  <p class="description">Choose a clear image from your phone to get started. AI generation requires an available online service.</p>
+  <div class="upload">
+   <div style="font-size:35px">▧</div>
+   <strong>Upload your image</strong>
+   <div class="description">Choose a photo from your device</div>
+   <input type="file" id="photo" accept="image/*">
+   <img id="preview" hidden alt="Selected image preview">
+  </div>
+  <button id="go" onclick="generate3D()">✦ Generate 3D Model</button>
+  <p id="status">Ready when you are — select an image to begin.</p>
+  <div id="result" hidden>
+   <h2>Your 3D Creation</h2>
+   <model-viewer id="viewer" camera-controls auto-rotate shadow-intensity="1"></model-viewer>
+   <a class="download" id="download">↓ Download your 3D model</a>
+  </div>
+ </section>
+
+ <section class="features">
+  <div class="feature"><b>▧ Easy Upload</b><p>Choose an image directly from your phone.</p></div>
+  <div class="feature"><b>✧ AI Powered</b><p>Send your image to the connected 3D generation service.</p></div>
+  <div class="feature"><b>⬡ Interactive Preview</b><p>Rotate and inspect your model, then save the GLB file.</p></div>
+ </section>
+</main>
+<footer>3D VISION AI · Create something extraordinary</footer>
+<script>
+const photo=document.getElementById('photo');
+const preview=document.getElementById('preview');
+photo.onchange=()=>{
+ if(photo.files.length){
+  preview.src=URL.createObjectURL(photo.files[0]);
+  preview.hidden=false;
+  document.getElementById('status').textContent='Image selected. Ready to create.';
+ }
+};
+async function generate3D(){
+ if(!photo.files.length){
+  document.getElementById('status').textContent='Please select an image first.';
+  return;
+ }
+ const button=document.getElementById('go');
+ const status=document.getElementById('status');
+ button.disabled=true;
+ status.textContent='✧ Sending image to AI. Generation may take several minutes...';
+ try{
+  const data=new FormData();
+  data.append('file',photo.files[0]);
+  const response=await fetch('/generate',{method:'POST',body:data});
+  if(!response.ok)throw new Error(await response.text());
+  const blob=await response.blob();
+  const url=URL.createObjectURL(blob);
+  document.getElementById('viewer').src=url;
+  document.getElementById('download').href=url;
+  document.getElementById('download').download='my_model.glb';
+  document.getElementById('result').hidden=false;
+  status.textContent='Success! Your 3D model is ready.';
+ }catch(error){
+  status.textContent='Generation failed: '+error.message;
+ }finally{
+  button.disabled=false;
+ }
+}
+</script>
+</body>
+</html>
