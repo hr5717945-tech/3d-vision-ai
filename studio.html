@@ -291,56 +291,47 @@ function clearResult() {
   setProgress(0);
 }
 
-/* Display the selected photo independently of enhancement. */
-imageInput.addEventListener("change", () => {
-  const file = imageInput.files && imageInput.files[0];
-  if (!file) return;
+/* Improved photo preview handler */
+imageInput.addEventListener("change", function () {
+  const file = this.files && this.files[0];
+
+  if (!file) {
+    imageStatus.textContent = "No photo selected.";
+    return;
+  }
 
   if (!file.type.startsWith("image/")) {
     imageStatus.textContent = "Please select a valid image.";
-    imageInput.value = "";
     return;
   }
 
-  if (file.size > 20 * 1024 * 1024) {
-    imageStatus.textContent = "Image is over 20 MB. Please choose a smaller photo.";
-    imageInput.value = "";
-    return;
-  }
-
-  selectedImageFile = file;
-  sourceImage = null;
-  clearResult();
-  imageStatus.textContent = "Reading " + file.name + "...";
+  imageStatus.textContent = "Loading photo...";
 
   const reader = new FileReader();
 
-  reader.onload = () => {
-    const img = new Image();
-
-    img.onload = () => {
-      sourceImage = img;
-      originalPreview.src = reader.result;
+  reader.onload = function () {
+    originalPreview.onload = function () {
       originalPreview.classList.remove("hidden");
       originalEmpty.classList.add("hidden");
+
+      sourceImage = originalPreview;
+      selectedImageFile = file;
+
+      clearResult();
+
       imageStatus.textContent =
-        "Photo loaded: " + img.naturalWidth + " × " +
-        img.naturalHeight + " pixels. Tap Enhance Image to continue.";
+        "Photo loaded successfully! Tap Enhance Image.";
     };
 
-    img.onerror = () => {
-      sourceImage = null;
-      selectedImageFile = null;
-      imageStatus.textContent = "Could not open this photo. Please try another.";
+    originalPreview.onerror = function () {
+      imageStatus.textContent = "Could not display this photo. Try another image.";
     };
 
-    img.src = reader.result;
+    originalPreview.src = reader.result;
   };
 
-  reader.onerror = () => {
-    sourceImage = null;
-    selectedImageFile = null;
-    imageStatus.textContent = "Could not read this photo. Please try again.";
+  reader.onerror = function () {
+    imageStatus.textContent = "Could not read the photo. Please try again.";
   };
 
   reader.readAsDataURL(file);
@@ -355,7 +346,7 @@ function canvasToPNG(canvas) {
   });
 }
 
-/* Browser-based enhancement and enlargement. */
+/* Browser-based enhancement and enlargement */
 enhanceBtn.addEventListener("click", async () => {
   if (processing) return;
 
@@ -459,7 +450,7 @@ $("resetBtn").addEventListener("click", () => {
     : "Settings reset. Choose a photo to begin.";
 });
 
-/* Image-to-3D backend integration. */
+/* Image-to-3D backend integration */
 const modelImageInput = $("modelImageInput");
 const generate3DBtn = $("generate3DBtn");
 const modelStatus = $("modelStatus");
