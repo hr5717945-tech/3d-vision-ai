@@ -7,7 +7,6 @@
 <meta name="theme-color" content="#090b1c">
 <meta name="description" content="3D Vision AI image enhancer and 3D studio">
 <title>3D Vision AI Studio</title>
-
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
 <style>
@@ -100,7 +99,16 @@ model-viewer{
   border:1px solid #00f5ff55;border-radius:16px;
 }
 .note{color:var(--muted);font-size:12px;line-height:1.6;margin-top:14px}
-footer{text-align:center;color:#8991b6;font-size:12px;padding:18px}
+footer{
+  text-align:center;color:#8991b6;font-size:12px;
+  padding:24px 18px 30px;border-top:1px solid #a855ff33;
+  background:#090b1c55;
+}
+footer .founder{
+  font-size:16px;font-weight:bold;color:var(--cyan);
+  text-shadow:0 0 12px #00f5ff55;margin-bottom:10px;
+}
+footer .copyright{margin:0}
 .hidden{display:none!important}
 @media(max-width:480px){
   .panel{padding:15px;border-radius:17px}
@@ -150,7 +158,7 @@ footer{text-align:center;color:#8991b6;font-size:12px;padding:18px}
       <select id="resolution">
         <option value="original">Original resolution</option>
         <option value="2560">2K — longest side 2560 px</option>
-        <option value="3840">4K UHD — 3840 × 2160 for 16:9 images</option>
+        <option value="3840">4K UHD — longest side 3840 px</option>
       </select>
     </div>
   </div>
@@ -175,7 +183,7 @@ footer{text-align:center;color:#8991b6;font-size:12px;padding:18px}
   </div>
 
   <div id="imageStatus" class="status" role="status">Ready — choose an image to get started.</div>
-  <p class="note">The enhancer runs locally in your browser and does not require a paid SDK. It adjusts image pixels but does not use AI to reconstruct missing detail. Large exports may be slow on some phones.</p>
+  <p class="note">This free enhancer runs in your browser. It adjusts image pixels but does not use AI to reconstruct missing detail. Large exports can be slow on some phones.</p>
 </section>
 
 <section class="panel">
@@ -198,7 +206,6 @@ footer{text-align:center;color:#8991b6;font-size:12px;padding:18px}
   </div>
 
   <div id="modelStatus" class="status" role="status">Connect your running backend to generate a model.</div>
-
   <model-viewer id="modelViewer" class="hidden" camera-controls auto-rotate shadow-intensity="1" exposure="1" alt="Generated 3D model"></model-viewer>
   <div class="buttons">
     <a id="modelDownloadLink" class="hidden" download="3d-model.glb" style="color:#00f5ff;padding:12px">⬇ Download 3D model</a>
@@ -206,7 +213,10 @@ footer{text-align:center;color:#8991b6;font-size:12px;padding:18px}
 </section>
 </main>
 
-<footer>© 2026 3D Vision AI · Made for creative minds ✦</footer>
+<footer>
+  <div class="founder">✦ Founded by HR ✦</div>
+  <p class="copyright">© 2026 3D Vision AI · Made for creative minds</p>
+</footer>
 
 <script>
 const imageInput = document.getElementById("imageInput");
@@ -236,10 +246,7 @@ function updateLabels() {
   document.getElementById("brightnessValue").textContent = brightness.value + "%";
   document.getElementById("sharpnessValue").textContent = sharpness.value;
 }
-
-[vibrance, contrast, brightness, sharpness].forEach(control => {
-  control.addEventListener("input", updateLabels);
-});
+[vibrance, contrast, brightness, sharpness].forEach(control => control.addEventListener("input", updateLabels));
 
 function clearResult() {
   if (resultObjectUrl) URL.revokeObjectURL(resultObjectUrl);
@@ -254,7 +261,6 @@ function clearResult() {
 imageInput.addEventListener("change", () => {
   const file = imageInput.files && imageInput.files[0];
   if (!file) return;
-
   if (!file.type.startsWith("image/")) {
     imageStatus.textContent = "Please choose a valid image file.";
     return;
@@ -266,28 +272,22 @@ imageInput.addEventListener("change", () => {
   imageStatus.textContent = "Loading image...";
 
   const img = new Image();
-
   img.onload = () => {
     sourceImage = img;
     originalPreview.src = sourceObjectUrl;
     originalPreview.classList.remove("hidden");
     originalEmpty.classList.add("hidden");
-    imageStatus.textContent =
-      "Image loaded: " + img.naturalWidth + " × " + img.naturalHeight +
-      ". Choose settings and tap Enhance Image.";
+    imageStatus.textContent = "Image loaded: " + img.naturalWidth + " × " + img.naturalHeight + ". Choose settings and tap Enhance Image.";
   };
-
   img.onerror = () => {
     sourceImage = null;
     imageStatus.textContent = "Could not open this image. Please try another file.";
   };
-
   img.src = sourceObjectUrl;
 });
 
 function sharpenCanvas(ctx, width, height, amount) {
   if (amount <= 0) return;
-
   const imageData = ctx.getImageData(0, 0, width, height);
   const src = imageData.data;
   const output = new Uint8ClampedArray(src);
@@ -302,32 +302,23 @@ function sharpenCanvas(ctx, width, height, amount) {
       const right = i + 4;
 
       for (let c = 0; c < 3; c++) {
-        output[i + c] =
-          src[i + c] * (1 + 4 * strength) -
-          strength * (
-            src[up + c] + src[down + c] +
-            src[left + c] + src[right + c]
-          );
+        output[i + c] = src[i + c] * (1 + 4 * strength) -
+          strength * (src[up + c] + src[down + c] + src[left + c] + src[right + c]);
       }
     }
   }
-
   imageData.data.set(output);
   ctx.putImageData(imageData, 0, 0);
 }
 
 function canvasToBlob(canvas) {
   return new Promise((resolve, reject) => {
-    canvas.toBlob(blob => {
-      if (blob) resolve(blob);
-      else reject(new Error("Could not export the image."));
-    }, "image/png");
+    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("Could not export the image.")), "image/png");
   });
 }
 
 enhanceBtn.addEventListener("click", async () => {
   if (processing) return;
-
   if (!sourceImage) {
     imageStatus.textContent = "First choose an image.";
     return;
@@ -344,16 +335,13 @@ enhanceBtn.addEventListener("click", async () => {
     const requested = resolution.value;
 
     if (requested !== "original") {
-      const longestSide = Number(requested);
-      const scale = longestSide / Math.max(width, height);
+      const scale = Number(requested) / Math.max(width, height);
       width = Math.max(1, Math.round(width * scale));
       height = Math.max(1, Math.round(height * scale));
     }
 
-    // Allow up to 18 megapixels for higher-resolution output.
-    // The browser may still impose its own canvas memory limits.
+    // Allow up to 18 megapixels, subject to browser/device memory limits.
     const maxPixels = 18000000;
-
     if (width * height > maxPixels) {
       const safeScale = Math.sqrt(maxPixels / (width * height));
       width = Math.max(1, Math.floor(width * safeScale));
@@ -363,20 +351,17 @@ enhanceBtn.addEventListener("click", async () => {
     const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
-
     const ctx = canvas.getContext("2d", {willReadFrequently:true});
     if (!ctx) throw new Error("Could not start image processing.");
 
     ctx.filter =
-      "saturate(" + (Number(vibrance.value) / 100) + ") " +
-      "contrast(" + (Number(contrast.value) / 100) + ") " +
-      "brightness(" + (Number(brightness.value) / 100) + ")";
-
+      "saturate(" + Number(vibrance.value) / 100 + ") " +
+      "contrast(" + Number(contrast.value) / 100 + ") " +
+      "brightness(" + Number(brightness.value) / 100 + ")";
     ctx.drawImage(sourceImage, 0, 0, width, height);
     ctx.filter = "none";
 
     sharpenCanvas(ctx, width, height, Number(sharpness.value));
-
     resultBlob = await canvasToBlob(canvas);
 
     if (resultObjectUrl) URL.revokeObjectURL(resultObjectUrl);
@@ -387,13 +372,11 @@ enhanceBtn.addEventListener("click", async () => {
     downloadBtn.disabled = false;
 
     imageStatus.textContent =
-      "Done! Output: " + width + " × " + height +
-      " pixels (" + (width * height / 1000000).toFixed(1) +
-      " MP). PNG size: " + (resultBlob.size / 1024 / 1024).toFixed(2) + " MB.";
+      "Done! Output: " + width + " × " + height + " pixels (" +
+      (width * height / 1000000).toFixed(1) + " MP). PNG size: " +
+      (resultBlob.size / 1024 / 1024).toFixed(2) + " MB.";
   } catch (error) {
-    imageStatus.textContent =
-      "Enhancement failed: " + error.message +
-      " Try a smaller photo or lower resolution.";
+    imageStatus.textContent = "Enhancement failed: " + error.message + " Try a smaller photo or lower resolution.";
   } finally {
     processing = false;
     enhanceBtn.disabled = false;
@@ -402,7 +385,6 @@ enhanceBtn.addEventListener("click", async () => {
 
 downloadBtn.addEventListener("click", () => {
   if (!resultBlob || !resultObjectUrl) return;
-
   const link = document.createElement("a");
   link.href = resultObjectUrl;
   link.download = "3d-vision-ai-enhanced.png";
@@ -437,7 +419,6 @@ generate3DBtn.addEventListener("click", async () => {
     modelStatus.textContent = "Choose an image for 3D generation first.";
     return;
   }
-
   if (!backendInput) {
     modelStatus.textContent = "Enter your hosted backend URL first. GitHub Pages cannot run the 3D backend alone.";
     return;
@@ -446,9 +427,7 @@ generate3DBtn.addEventListener("click", async () => {
   let endpoint;
   try {
     endpoint = new URL(backendInput);
-    if (!["https:", "http:"].includes(endpoint.protocol)) {
-      throw new Error("Invalid URL");
-    }
+    if (!["https:", "http:"].includes(endpoint.protocol)) throw new Error("Invalid URL");
     endpoint.pathname = endpoint.pathname.replace(/\/+$/, "") + "/generate";
   } catch {
     modelStatus.textContent = "Enter a valid backend URL, including https://.";
@@ -461,22 +440,12 @@ generate3DBtn.addEventListener("click", async () => {
   try {
     const formData = new FormData();
     formData.append("image", file);
-
-    const response = await fetch(endpoint.href, {
-      method: "POST",
-      body: formData
-    });
-
-    if (!response.ok) {
-      throw new Error("Backend returned HTTP " + response.status);
-    }
+    const response = await fetch(endpoint.href, {method:"POST", body:formData});
+    if (!response.ok) throw new Error("Backend returned HTTP " + response.status);
 
     const data = await response.json();
     const returnedUrl = data.model_url || data.glb_url || data.url;
-
-    if (!returnedUrl) {
-      throw new Error("Backend response did not contain a model URL.");
-    }
+    if (!returnedUrl) throw new Error("Backend response did not contain a model URL.");
 
     const modelUrl = new URL(returnedUrl, endpoint.href).href;
     modelViewer.src = modelUrl;
@@ -485,9 +454,7 @@ generate3DBtn.addEventListener("click", async () => {
     modelDownloadLink.classList.remove("hidden");
     modelStatus.textContent = "Model received! Rotate and zoom it in the viewer.";
   } catch (error) {
-    modelStatus.textContent =
-      "Generation failed: " + error.message +
-      ". Check your backend URL, CORS settings and API response format.";
+    modelStatus.textContent = "Generation failed: " + error.message + ". Check your backend URL, CORS settings and API response format.";
   } finally {
     generate3DBtn.disabled = false;
   }
