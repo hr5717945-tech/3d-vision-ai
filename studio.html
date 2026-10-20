@@ -1,81 +1,103 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>3D Vision AI | Image to 3D Studio</title>
+<title>3D Vision AI | HAROON 3D Studio</title>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 <style>
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
  margin:0;font-family:Arial,sans-serif;color:#f8fafc;
  background:radial-gradient(ellipse at top,#312e81 0%,#111827 48%,#080b16 100%);
- min-height:100vh
+ min-height:100vh;position:relative;isolation:isolate
 }
-header{
- display:flex;align-items:center;justify-content:space-between;
- padding:22px 7%;border-bottom:1px solid #ffffff18
-}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 7%;border-bottom:1px solid #ffffff18;gap:12px}
 .logo{font-size:21px;font-weight:800;letter-spacing:1px}
 .logo span{color:#a78bfa}
 .tag{color:#c4b5fd;font-size:12px}
 main{max-width:950px;margin:auto;padding:48px 18px}
 .hero{text-align:center;margin-bottom:35px}
-.pill{
- display:inline-block;padding:9px 15px;border:1px solid #8b5cf6;
- border-radius:30px;color:#ddd6fe;background:#8b5cf620;font-size:13px
-}
+.pill{display:inline-block;padding:9px 15px;border:1px solid #8b5cf6;border-radius:30px;color:#ddd6fe;background:#8b5cf620;font-size:13px}
 h1{font-size:clamp(34px,7vw,58px);line-height:1.1;margin:22px 0}
-h1 span{
- background:linear-gradient(90deg,#c4b5fd,#60a5fa);
- -webkit-background-clip:text;background-clip:text;color:transparent
-}
+h1 span{background:linear-gradient(90deg,#c4b5fd,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
 .subtitle{color:#cbd5e1;line-height:1.8;max-width:600px;margin:0 auto}
-.panel{
- background:#ffffff0b;border:1px solid #ffffff20;border-radius:22px;
- padding:25px;box-shadow:0 20px 60px #0003;backdrop-filter:blur(12px)
-}
+.panel{background:#ffffff0b;border:1px solid #ffffff20;border-radius:22px;padding:25px;box-shadow:0 20px 60px #0003;backdrop-filter:blur(12px)}
 h2{font-size:21px;margin-top:0}
 .description{color:#aebbd0;font-size:14px;line-height:1.7}
-.upload{
- display:block;border:2px dashed #8b5cf6;border-radius:16px;
- padding:25px 12px;text-align:center;background:#8b5cf610;
- margin:20px 0
-}
+.upload{display:block;border:2px dashed #8b5cf6;border-radius:16px;padding:25px 12px;text-align:center;background:#8b5cf610;margin:20px 0}
 .upload strong{display:block;margin:10px 0}
 input[type=file]{width:100%;margin-top:12px;color:#cbd5e1}
 #preview{max-width:100%;max-height:240px;object-fit:contain;border-radius:12px;margin-top:15px}
-button{
- border:0;border-radius:12px;padding:15px 20px;font-size:15px;
- font-weight:bold;cursor:pointer;color:white;
- background:linear-gradient(100deg,#7c3aed,#2563eb);width:100%;
- box-shadow:0 8px 25px #4f46e550
-}
+button{border:0;border-radius:12px;padding:15px 20px;font-size:15px;font-weight:bold;cursor:pointer;color:white;background:linear-gradient(100deg,#7c3aed,#2563eb);width:100%;box-shadow:0 8px 25px #4f46e550}
 button:disabled{opacity:.55;cursor:wait}
 #status{color:#c4b5fd;text-align:center;line-height:1.6;font-size:14px}
-model-viewer{
- width:100%;height:350px;background:#111827;border-radius:15px;
- margin-top:15px
-}
+model-viewer{width:100%;height:350px;background:#111827;border-radius:15px;margin-top:15px}
 .download{display:block;text-align:center;color:#c4b5fd;margin:18px}
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
 .feature{background:#ffffff08;border:1px solid #ffffff15;padding:16px;border-radius:14px}
 .feature b{display:block;margin-bottom:8px;font-size:14px}
 .feature p{font-size:12px;color:#aebbd0;line-height:1.6;margin-bottom:0}
 footer{text-align:center;padding:30px;color:#94a3b8;font-size:12px}
+
+/* HAROON 3D FEATURE */
+.h3d-section{
+ position:relative;isolation:isolate;overflow:hidden;
+ margin:0 auto 35px;padding:35px 15px 40px;min-height:430px;
+ border:1px solid #818cf844;border-radius:25px;
+ background:radial-gradient(ellipse at 50% 48%,#312e8170,#111827 60%,#050713);
+ text-align:center;box-shadow:0 0 45px #4f46e51c,inset 0 0 45px #2563eb12
+}
+.h3d-section:before,.h3d-section:after{content:"";position:absolute;z-index:-1;border-radius:50%;filter:blur(35px);pointer-events:none}
+.h3d-section:before{width:180px;height:180px;left:-65px;top:65px;background:#7c3aed55}
+.h3d-section:after{width:190px;height:190px;right:-70px;bottom:25px;background:#0284c755}
+.h3d-label{display:inline-block;color:#bfdbfe;font-size:11px;letter-spacing:4px;border:1px solid #60a5fa66;background:#2563eb18;border-radius:30px;padding:10px 15px}
+.h3d-title{margin:20px 0 0;font-size:clamp(25px,5vw,36px);letter-spacing:6px;font-weight:900;color:#f8fafc;text-shadow:0 0 15px #818cf8aa}
+.h3d-stage{position:relative;display:flex;justify-content:center;align-items:center;min-height:245px;perspective:800px;overflow:hidden}
+.h3d-number{
+ position:relative;display:inline-block;line-height:1;
+ font-family:Arial Black,Arial,sans-serif;font-size:clamp(180px,49vw,300px);
+ font-weight:1000;font-style:italic;letter-spacing:-15px;padding-right:15px;
+ background:linear-gradient(145deg,#fff 5%,#bfdbfe 22%,#60a5fa 42%,#6366f1 65%,#c4b5fd 82%,#fff);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+ filter:drop-shadow(0 0 8px #60a5fa) drop-shadow(0 0 22px #4f46e5) drop-shadow(0 0 42px #7c3aed);
+ transform:rotateY(-12deg) rotateX(5deg);animation:h3d-float 4s ease-in-out infinite
+}
+.h3d-number:after{
+ content:"3";position:absolute;inset:0;z-index:-1;
+ background:linear-gradient(180deg,#4338ca,#1d4ed8 55%,#111827);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+ transform:translate(9px,13px);
+ filter:drop-shadow(3px 3px 0 #312e81) drop-shadow(5px 6px 0 #1e1b4b)
+}
+.h3d-ring{position:absolute;width:230px;height:65px;border:2px solid #818cf866;border-radius:50%;transform:rotateX(65deg) rotateZ(-12deg);box-shadow:0 0 20px #6366f155,inset 0 0 16px #60a5fa33;pointer-events:none}
+.h3d-name{font-size:clamp(27px,7vw,49px);font-weight:900;letter-spacing:clamp(5px,2.4vw,12px);margin:0;color:#f8fafc;text-shadow:0 0 7px #fff,0 0 18px #60a5fa,0 0 35px #6366f1,0 0 60px #7c3aed}
+.h3d-caption{margin:14px 0 0;font-size:11px;color:#a5b4fc;letter-spacing:4px}
+.h3d-line{height:2px;width:min(230px,70%);margin:22px auto 0;background:linear-gradient(90deg,transparent,#60a5fa,#a78bfa,transparent);box-shadow:0 0 12px #6366f1}
+@keyframes h3d-float{
+ 0%,100%{transform:translateY(0) rotateY(-12deg) rotateX(5deg)}
+ 50%{transform:translateY(-10px) rotateY(12deg) rotateX(-2deg)}
+}
+#particle-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 20%,#6d28d933,transparent 42%),radial-gradient(ellipse at 85% 65%,#2563eb30,transparent 45%)}
 @media(max-width:560px){
  main{padding:35px 14px}
  .panel{padding:18px}
  .features{grid-template-columns:1fr}
  header{padding:18px}
+ .tag{font-size:9px}
+ .h3d-section{min-height:390px;padding:30px 10px}
+ .h3d-stage{min-height:220px}
+ .h3d-number{font-size:clamp(175px,55vw,250px)}
+ .h3d-ring{width:190px}
 }
-
-#particle-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
-body{position:relative;isolation:isolate}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 20%,#6d28d933,transparent 42%),radial-gradient(ellipse at 85% 65%,#2563eb30,transparent 45%)}
+@media(prefers-reduced-motion:reduce){.h3d-number{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+
 <canvas id="particle-bg" aria-hidden="true"></canvas>
 <script>
 (()=>{
@@ -83,25 +105,26 @@ const c=document.getElementById("particle-bg"),ctx=c.getContext("2d");
 if(!ctx)return;
 let w,h,particles=[],dpr=1;
 function resize(){
-dpr=Math.min(window.devicePixelRatio||1,1.5);
-w=innerWidth;h=innerHeight;c.width=w*dpr;c.height=h*dpr;
-c.style.width=w+"px";c.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
-const count=Math.min(180,Math.max(100,Math.floor(w*h/5000)));
-particles=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.8+1.2,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,a:Math.random()*.8+.4,hue:Math.random()>.5?255:195}));
+ dpr=Math.min(window.devicePixelRatio||1,1.5);
+ w=innerWidth;h=innerHeight;c.width=w*dpr;c.height=h*dpr;
+ c.style.width=w+"px";c.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
+ const count=Math.min(180,Math.max(100,Math.floor(w*h/5000)));
+ particles=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.8+1.2,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,a:Math.random()*.8+.4,hue:Math.random()>.5?255:195}));
 }
 function draw(){
-ctx.clearRect(0,0,w,h);
-for(let i=0;i<particles.length;i++){
-const p=particles[i];p.x+=p.vx;p.y+=p.vy;
-if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
-ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fillStyle="hsla("+p.hue+",100%,75%,"+p.a+")";ctx.shadowBlur=18;ctx.shadowColor="hsla("+p.hue+",100%,65%,0.7)";ctx.fill();ctx.shadowBlur=0;
-for(let j=i+1;j<particles.length;j++){
-const q=particles[j],dx=p.x-q.x,dy=p.y-q.y,dist=Math.sqrt(dx*dx+dy*dy);
-if(dist<140){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle="rgba(139,120,255,"+(.28*(1-dist/140))+")";ctx.stroke();}
-}
-}
-requestAnimationFrame(draw);
+ ctx.clearRect(0,0,w,h);
+ for(let i=0;i<particles.length;i++){
+  const p=particles[i];p.x+=p.vx;p.y+=p.vy;
+  if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+  ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  ctx.fillStyle="hsla("+p.hue+",100%,75%,"+p.a+")";
+  ctx.shadowBlur=18;ctx.shadowColor="hsla("+p.hue+",100%,65%,0.7)";ctx.fill();ctx.shadowBlur=0;
+  for(let j=i+1;j<particles.length;j++){
+   const q=particles[j],dx=p.x-q.x,dy=p.y-q.y,dist=Math.sqrt(dx*dx+dy*dy);
+   if(dist<140){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle="rgba(139,120,255,"+(.28*(1-dist/140))+")";ctx.stroke()}
+  }
+ }
+ requestAnimationFrame(draw);
 }
 resize();window.addEventListener("resize",resize);draw();
 })();
@@ -111,11 +134,25 @@ resize();window.addEventListener("resize",resize);draw();
  <div class="logo">✦ 3D <span>VISION AI</span></div>
  <div class="tag">IMAGE TO 3D STUDIO</div>
 </header>
+
 <main>
  <section class="hero">
   <div class="pill">✧ YOUR CREATIVE AI WORKSPACE</div>
   <h1>Turn Images Into<br><span>3D Experiences</span></h1>
   <p class="subtitle">Bring your ideas to life. Upload an image, generate a 3D model, explore it in your browser, and download your creation.</p>
+ </section>
+
+ <!-- NEW HAROON 3D SECTION -->
+ <section class="h3d-section" aria-label="Haroon 3D display">
+  <div class="h3d-label">✦ PERSONAL 3D UNIVERSE ✦</div>
+  <h2 class="h3d-title">WELCOME TO MY WORLD</h2>
+  <div class="h3d-stage">
+   <div class="h3d-ring"></div>
+   <div class="h3d-number" aria-label="Number 3">3</div>
+  </div>
+  <h2 class="h3d-name">HAROON</h2>
+  <p class="h3d-caption">CREATE · INNOVATE · INSPIRE</p>
+  <div class="h3d-line"></div>
  </section>
 
  <section class="panel">
@@ -143,10 +180,13 @@ resize();window.addEventListener("resize",resize);draw();
   <div class="feature"><b>⬡ Interactive Preview</b><p>Rotate and inspect your model, then save the GLB file.</p></div>
  </section>
 </main>
-<footer>3D VISION AI · Create something extraordinary</footer>
+
+<footer>3D VISION AI · HAROON · Create something extraordinary</footer>
+
 <script>
 const photo=document.getElementById('photo');
 const preview=document.getElementById('preview');
+
 photo.onchange=()=>{
  if(photo.files.length){
   preview.src=URL.createObjectURL(photo.files[0]);
@@ -154,6 +194,7 @@ photo.onchange=()=>{
   document.getElementById('status').textContent='Image selected. Ready to create.';
  }
 };
+
 async function generate3D(){
  if(!photo.files.length){
   document.getElementById('status').textContent='Please select an image first.';
