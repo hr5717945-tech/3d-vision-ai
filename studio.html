@@ -5,14 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090b1c">
-<meta name="description" content="3D Vision AI image enhancer and 3D studio">
-<title>3D Vision AI Studio</title>
+<title>3D Vision AI</title>
+
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
 <style>
 :root {
-  --bg:#090b1c;
-  --panel:rgba(22,26,55,.9);
   --cyan:#00f5ff;
   --pink:#ff38d1;
   --purple:#a855ff;
@@ -20,101 +18,231 @@
   --text:#f7f8ff;
   --muted:#b9c0df;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;min-height:100vh;color:var(--text);
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
   background:
     radial-gradient(ellipse at 10% 5%,#33206f,transparent 35%),
     radial-gradient(ellipse at 95% 15%,#083f59,transparent 32%),
-    radial-gradient(ellipse at 50% 100%,#471448,transparent 35%),
-    var(--bg);
+    #090b1c;
 }
-header{text-align:center;padding:30px 16px 22px}
-.logo{
-  display:inline-block;font-size:clamp(28px,7vw,46px);
-  font-weight:900;letter-spacing:-1.5px;
+header { text-align:center; padding:30px 16px 22px; }
+.logo {
+  font-size:clamp(29px,7vw,46px);
+  font-weight:900;
+  letter-spacing:-1px;
   background:linear-gradient(90deg,var(--cyan),white,var(--pink),var(--lime));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 15px #00eaff55);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
 }
-header p{color:var(--muted);margin:10px auto 0;line-height:1.6;max-width:560px}
-.pill{
-  display:inline-block;padding:7px 12px;border:1px solid #00f5ff66;
-  border-radius:50px;background:#00f5ff12;color:var(--cyan);
-  font-size:12px;font-weight:bold;margin-bottom:12px;
+header p {
+  color:var(--muted);
+  max-width:580px;
+  margin:12px auto;
+  line-height:1.6;
 }
-main{width:min(100% - 24px,1050px);margin:auto;padding-bottom:35px}
-.panel{
-  background:var(--panel);border:1px solid #a855ff66;border-radius:22px;
-  padding:20px;margin:18px 0;box-shadow:0 0 28px #812cff18;
-  backdrop-filter:blur(14px);
+.pill {
+  display:inline-block;
+  padding:8px 13px;
+  border:1px solid #00f5ff77;
+  border-radius:50px;
+  color:var(--cyan);
+  background:#00f5ff12;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
-.panel h2{margin:0 0 8px;font-size:23px}
-.accent{
+main { width:min(100% - 24px,1000px); margin:auto; }
+.panel {
+  margin:18px 0;
+  padding:20px;
+  border-radius:20px;
+  border:1px solid #a855ff70;
+  background:rgba(22,26,55,.94);
+  box-shadow:0 0 25px #812cff18;
+}
+h2 { margin:0 0 10px; font-size:23px; }
+.accent {
   background:linear-gradient(90deg,var(--cyan),var(--pink));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
 }
-.description{color:var(--muted);line-height:1.6;font-size:14px;margin:8px 0 18px}
-.upload{
-  display:block;width:100%;padding:18px 12px;text-align:center;
-  border:2px dashed #00f5ff99;background:#00f5ff09;
-  border-radius:15px;color:var(--cyan);margin:15px 0;
+.description,.note {
+  color:var(--muted);
+  line-height:1.6;
+  font-size:14px;
 }
-input[type=file]{display:block;width:100%;margin-top:12px;color:var(--muted);font-size:13px}
-input[type=file]::file-selector-button{
-  border:0;padding:10px 12px;border-radius:9px;
-  background:linear-gradient(90deg,var(--cyan),#80ffe7);
-  color:#08101c;font-weight:bold;margin-right:10px;
+.upload {
+  padding:17px 12px;
+  margin:15px 0;
+  border:2px dashed #00f5ff99;
+  border-radius:14px;
+  color:var(--cyan);
+  text-align:center;
+  background:#00f5ff08;
 }
-.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:18px 0}
-.control{padding:14px;border:1px solid #ffffff16;background:#ffffff06;border-radius:14px}
-.control label{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:bold;margin-bottom:12px}
-.control output{color:var(--cyan)}
-input[type=range]{width:100%;accent-color:var(--pink);cursor:pointer}
-select,input[type=url]{
-  width:100%;padding:13px;border-radius:10px;
-  border:1px solid #a855ff77;background:#11142c;color:white;outline:none;
+input[type=file] {
+  display:block;
+  width:100%;
+  margin-top:12px;
+  color:var(--muted);
 }
-.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-button{
-  border:0;border-radius:12px;padding:13px 17px;
-  font-size:14px;font-weight:800;cursor:pointer;transition:transform .15s;
+input[type=file]::file-selector-button {
+  padding:10px;
+  margin-right:8px;
+  border:0;
+  border-radius:8px;
+  background:var(--cyan);
+  font-weight:bold;
 }
-button:active{transform:scale(.97)}
-button:disabled{opacity:.5;cursor:not-allowed}
-.primary{flex:1 1 180px;color:#08101c;background:linear-gradient(100deg,var(--cyan),#66ffcf);box-shadow:0 0 18px #00f5ff30}
-.pink{flex:1 1 140px;color:white;background:linear-gradient(100deg,#a855ff,var(--pink));box-shadow:0 0 18px #ff38d130}
-.secondary{flex:1 1 120px;color:white;background:#25294c;border:1px solid #ffffff20}
-button:hover{filter:brightness(1.12)}
-.previews{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:20px}
-.preview{min-width:0;border-radius:15px;overflow:hidden;border:1px solid #ffffff20;background:#080a17}
-.preview h3{margin:0;padding:12px;font-size:13px;color:var(--cyan);border-bottom:1px solid #ffffff12}
-.preview img{display:block;width:100%;max-height:390px;object-fit:contain;min-height:130px}
-.empty{min-height:160px;display:grid;place-items:center;padding:20px;color:#7d85aa;font-size:13px;text-align:center}
-.status{padding:12px;margin-top:14px;background:#ffffff08;border-radius:10px;color:var(--lime);font-size:13px;line-height:1.6;overflow-wrap:anywhere}
-model-viewer{
-  width:100%;height:360px;margin-top:15px;
-  background:radial-gradient(circle,#20254b,#090b1c);
-  border:1px solid #00f5ff55;border-radius:16px;
+.controls {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px;
+  margin:18px 0;
 }
-.note{color:var(--muted);font-size:12px;line-height:1.6;margin-top:14px}
-footer{
-  text-align:center;color:#8991b6;font-size:12px;
-  padding:24px 18px 30px;border-top:1px solid #a855ff33;
-  background:#090b1c55;
+.control {
+  padding:14px;
+  border:1px solid #ffffff20;
+  border-radius:13px;
+  background:#ffffff06;
 }
-footer .founder{
-  font-size:16px;font-weight:bold;color:var(--cyan);
-  text-shadow:0 0 12px #00f5ff55;margin-bottom:10px;
+.control label {
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
-footer .copyright{margin:0}
-.hidden{display:none!important}
-@media(max-width:480px){
-  .panel{padding:15px;border-radius:17px}
-  header{padding-top:24px}
-  .controls{grid-template-columns:1fr}
-  model-viewer{height:290px}
+output { color:var(--cyan); }
+input[type=range] { width:100%; accent-color:var(--pink); }
+select,input[type=url] {
+  width:100%;
+  padding:12px;
+  border:1px solid #a855ff88;
+  border-radius:9px;
+  background:#11142c;
+  color:white;
+}
+.buttons {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:16px 0;
+}
+button {
+  padding:13px 16px;
+  border:0;
+  border-radius:11px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:disabled { opacity:.5; }
+.primary {
+  flex:1;
+  color:#08101c;
+  background:linear-gradient(100deg,var(--cyan),#66ffcf);
+}
+.pink {
+  flex:1;
+  color:white;
+  background:linear-gradient(100deg,var(--purple),var(--pink));
+}
+.secondary {
+  color:white;
+  background:#292d50;
+}
+.previews {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:18px;
+}
+.preview {
+  overflow:hidden;
+  border:1px solid #ffffff22;
+  border-radius:13px;
+  background:#080a17;
+}
+.preview h3 {
+  margin:0;
+  padding:12px;
+  font-size:13px;
+  color:var(--cyan);
+}
+.preview img {
+  display:block;
+  width:100%;
+  max-height:400px;
+  object-fit:contain;
+}
+.empty {
+  min-height:130px;
+  padding:20px;
+  display:grid;
+  place-items:center;
+  color:#929aba;
+  text-align:center;
+  font-size:13px;
+}
+.status {
+  margin-top:14px;
+  padding:13px;
+  border-radius:10px;
+  background:#ffffff08;
+  color:var(--lime);
+  font-size:13px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+model-viewer {
+  width:100%;
+  height:330px;
+  margin-top:16px;
+  border:1px solid #00f5ff66;
+  border-radius:14px;
+  background:#10142c;
+}
+.hidden { display:none !important; }
+
+/* Visible footer */
+.site-footer {
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:100%;
+  margin-top:35px;
+  padding:30px 15px;
+  text-align:center;
+  background:#101329;
+  border-top:2px solid var(--cyan);
+  box-shadow:0 -5px 25px #00f5ff18;
+}
+.founder {
+  display:block;
+  color:var(--cyan);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:12px;
+  text-shadow:0 0 14px #00f5ff66;
+}
+.copyright {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  margin:0;
+}
+@media(max-width:480px) {
+  .panel { padding:15px; }
+  .controls { grid-template-columns:1fr; }
+  model-viewer { height:280px; }
 }
 </style>
 </head>
@@ -123,116 +251,115 @@ footer .copyright{margin:0}
 <header>
   <div class="pill">✦ FREE BROWSER STUDIO</div>
   <div class="logo">3D VISION AI</div>
-  <p>Enhance your photos with vibrant colors, sharper details and high-resolution exports. Explore your 3D creations in one studio.</p>
+  <p>Enhance your photos with vibrant colors, sharp details and high-resolution exports. Explore 3D creations in one studio.</p>
 </header>
 
 <main>
-<section class="panel">
-  <h2>🌈 <span class="accent">Image Enhancement Studio</span></h2>
-  <p class="description">Upload a photo and adjust colors, contrast, brightness, sharpness and export resolution.</p>
+  <section class="panel">
+    <h2>🌈 <span class="accent">Image Enhancement Studio</span></h2>
+    <p class="description">Select a photo, customize its appearance and export an enhanced PNG.</p>
 
-  <div class="upload">
-    <strong>📸 Choose your image</strong>
-    <input id="imageInput" type="file" accept="image/*">
-  </div>
+    <div class="upload">
+      <strong>📸 Choose your photo</strong>
+      <input id="imageInput" type="file" accept="image/*">
+    </div>
 
-  <div class="controls">
+    <div class="controls">
+      <div class="control">
+        <label for="vibrance">🌈 Color vibrance <output id="vibranceValue">150%</output></label>
+        <input id="vibrance" type="range" min="50" max="200" value="150">
+      </div>
+      <div class="control">
+        <label for="contrast">✨ Contrast <output id="contrastValue">115%</output></label>
+        <input id="contrast" type="range" min="80" max="160" value="115">
+      </div>
+      <div class="control">
+        <label for="brightness">☀️ Brightness <output id="brightnessValue">105%</output></label>
+        <input id="brightness" type="range" min="70" max="140" value="105">
+      </div>
+      <div class="control">
+        <label for="sharpness">🔍 Sharpness <output id="sharpnessValue">1</output></label>
+        <input id="sharpness" type="range" min="0" max="3" step="0.5" value="1">
+      </div>
+      <div class="control">
+        <label for="resolution">🖼️ Export resolution</label>
+        <select id="resolution">
+          <option value="original">Original size</option>
+          <option value="2560">2K — longest side 2560 px</option>
+          <option value="3840">4K UHD — longest side 3840 px</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="primary" id="enhanceBtn">✨ Enhance Image</button>
+      <button class="pink" id="downloadBtn" disabled>⬇ Download PNG</button>
+      <button class="secondary" id="resetBtn">↺ Reset</button>
+    </div>
+
+    <div class="previews">
+      <div class="preview">
+        <h3>ORIGINAL PHOTO</h3>
+        <div id="originalEmpty" class="empty">Your original image will appear here.</div>
+        <img id="originalPreview" class="hidden" alt="Original photo">
+      </div>
+      <div class="preview">
+        <h3>ENHANCED PHOTO</h3>
+        <div id="resultEmpty" class="empty">Your enhanced image will appear here.</div>
+        <img id="resultPreview" class="hidden" alt="Enhanced photo">
+      </div>
+    </div>
+
+    <div id="imageStatus" class="status" role="status">Ready. Choose an image to begin.</div>
+    <p class="note">This free browser tool adjusts colors and sharpness. It does not use AI to reconstruct missing details. Large images may take longer on your phone.</p>
+  </section>
+
+  <section class="panel">
+    <h2>🧊 <span class="accent">Image to 3D Studio</span></h2>
+    <p class="description">Connect your hosted backend to generate and preview 3D models.</p>
+
+    <div class="upload">
+      <strong>Choose an image for 3D</strong>
+      <input id="modelImageInput" type="file" accept="image/*">
+    </div>
+
     <div class="control">
-      <label for="vibrance">🌈 Color vibrance <output id="vibranceValue">150%</output></label>
-      <input id="vibrance" type="range" min="50" max="200" value="150">
+      <label for="backendUrl">Backend API URL</label>
+      <input id="backendUrl" type="url" placeholder="https://your-backend.example.com">
+      <p class="note">GitHub Pages cannot run a Python backend on its own. Enter the URL of your hosted backend.</p>
     </div>
-    <div class="control">
-      <label for="contrast">✨ Contrast <output id="contrastValue">115%</output></label>
-      <input id="contrast" type="range" min="80" max="160" value="115">
+
+    <div class="buttons">
+      <button class="pink" id="generate3DBtn">🚀 Generate 3D Model</button>
     </div>
-    <div class="control">
-      <label for="brightness">☀️ Brightness <output id="brightnessValue">105%</output></label>
-      <input id="brightness" type="range" min="70" max="140" value="105">
-    </div>
-    <div class="control">
-      <label for="sharpness">🔍 Sharpness <output id="sharpnessValue">1</output></label>
-      <input id="sharpness" type="range" min="0" max="3" step="0.5" value="1">
-    </div>
-    <div class="control">
-      <label for="resolution">🖼️ Output resolution</label>
-      <select id="resolution">
-        <option value="original">Original resolution</option>
-        <option value="2560">2K — longest side 2560 px</option>
-        <option value="3840">4K UHD — longest side 3840 px</option>
-      </select>
-    </div>
-  </div>
 
-  <div class="buttons">
-    <button class="primary" id="enhanceBtn">✨ Enhance Image</button>
-    <button class="pink" id="downloadBtn" disabled>⬇ Download PNG</button>
-    <button class="secondary" id="resetBtn">↺ Reset settings</button>
-  </div>
-
-  <div class="previews">
-    <div class="preview">
-      <h3>ORIGINAL IMAGE</h3>
-      <div id="originalEmpty" class="empty">Your original photo will appear here.</div>
-      <img id="originalPreview" class="hidden" alt="Original image preview">
-    </div>
-    <div class="preview">
-      <h3>ENHANCED RESULT</h3>
-      <div id="resultEmpty" class="empty">Your enhanced image will appear here.</div>
-      <img id="resultPreview" class="hidden" alt="Enhanced image preview">
-    </div>
-  </div>
-
-  <div id="imageStatus" class="status" role="status">Ready — choose an image to get started.</div>
-  <p class="note">This free enhancer runs in your browser. It adjusts image pixels but does not use AI to reconstruct missing detail. Large exports can be slow on some phones.</p>
-</section>
-
-<section class="panel">
-  <h2>🧊 <span class="accent">Image to 3D Studio</span></h2>
-  <p class="description">Connect your hosted 3D backend to generate and preview a 3D model.</p>
-
-  <div class="upload">
-    <strong>🪄 Choose an image for 3D</strong>
-    <input id="modelImageInput" type="file" accept="image/*">
-  </div>
-
-  <div class="control">
-    <label for="backendUrl">Backend API URL</label>
-    <input id="backendUrl" type="url" placeholder="https://your-backend.example.com">
-    <p class="note">GitHub Pages cannot run a Python backend by itself. Enter your hosted backend URL here.</p>
-  </div>
-
-  <div class="buttons">
-    <button class="pink" id="generate3DBtn">🚀 Generate 3D Model</button>
-  </div>
-
-  <div id="modelStatus" class="status" role="status">Connect your running backend to generate a model.</div>
-  <model-viewer id="modelViewer" class="hidden" camera-controls auto-rotate shadow-intensity="1" exposure="1" alt="Generated 3D model"></model-viewer>
-  <div class="buttons">
-    <a id="modelDownloadLink" class="hidden" download="3d-model.glb" style="color:#00f5ff;padding:12px">⬇ Download 3D model</a>
-  </div>
-</section>
+    <div id="modelStatus" class="status" role="status">Connect your backend to generate a model.</div>
+    <model-viewer id="modelViewer" class="hidden" camera-controls auto-rotate shadow-intensity="1" alt="Generated 3D model"></model-viewer>
+    <p><a id="modelDownloadLink" class="hidden" download="3d-model.glb" style="color:#00f5ff">Download 3D model</a></p>
+  </section>
 </main>
 
-<footer>
-  <div class="founder">✦ Founded by HR ✦</div>
-  <p class="copyright">© 2026 3D Vision AI · Made for creative minds</p>
+<footer class="site-footer" id="siteFooter">
+  <div class="founder">✦ FOUNDER: HR ✦</div>
+  <p class="copyright">© 2026 3D Vision AI<br>Made for creative minds</p>
 </footer>
 
 <script>
-const imageInput = document.getElementById("imageInput");
-const originalPreview = document.getElementById("originalPreview");
-const resultPreview = document.getElementById("resultPreview");
-const originalEmpty = document.getElementById("originalEmpty");
-const resultEmpty = document.getElementById("resultEmpty");
-const imageStatus = document.getElementById("imageStatus");
-const enhanceBtn = document.getElementById("enhanceBtn");
-const downloadBtn = document.getElementById("downloadBtn");
+const $ = id => document.getElementById(id);
 
-const vibrance = document.getElementById("vibrance");
-const contrast = document.getElementById("contrast");
-const brightness = document.getElementById("brightness");
-const sharpness = document.getElementById("sharpness");
-const resolution = document.getElementById("resolution");
+const imageInput = $("imageInput");
+const originalPreview = $("originalPreview");
+const resultPreview = $("resultPreview");
+const originalEmpty = $("originalEmpty");
+const resultEmpty = $("resultEmpty");
+const imageStatus = $("imageStatus");
+const enhanceBtn = $("enhanceBtn");
+const downloadBtn = $("downloadBtn");
+const vibrance = $("vibrance");
+const contrast = $("contrast");
+const brightness = $("brightness");
+const sharpness = $("sharpness");
+const resolution = $("resolution");
 
 let sourceImage = null;
 let sourceObjectUrl = null;
@@ -241,12 +368,14 @@ let resultBlob = null;
 let processing = false;
 
 function updateLabels() {
-  document.getElementById("vibranceValue").textContent = vibrance.value + "%";
-  document.getElementById("contrastValue").textContent = contrast.value + "%";
-  document.getElementById("brightnessValue").textContent = brightness.value + "%";
-  document.getElementById("sharpnessValue").textContent = sharpness.value;
+  $("vibranceValue").textContent = vibrance.value + "%";
+  $("contrastValue").textContent = contrast.value + "%";
+  $("brightnessValue").textContent = brightness.value + "%";
+  $("sharpnessValue").textContent = sharpness.value;
 }
-[vibrance, contrast, brightness, sharpness].forEach(control => control.addEventListener("input", updateLabels));
+[vibrance, contrast, brightness, sharpness].forEach(el =>
+  el.addEventListener("input", updateLabels)
+);
 
 function clearResult() {
   if (resultObjectUrl) URL.revokeObjectURL(resultObjectUrl);
@@ -261,15 +390,16 @@ function clearResult() {
 imageInput.addEventListener("change", () => {
   const file = imageInput.files && imageInput.files[0];
   if (!file) return;
+
   if (!file.type.startsWith("image/")) {
-    imageStatus.textContent = "Please choose a valid image file.";
+    imageStatus.textContent = "Please choose an image file.";
     return;
   }
 
   if (sourceObjectUrl) URL.revokeObjectURL(sourceObjectUrl);
   sourceObjectUrl = URL.createObjectURL(file);
   clearResult();
-  imageStatus.textContent = "Loading image...";
+  imageStatus.textContent = "Loading photo...";
 
   const img = new Image();
   img.onload = () => {
@@ -277,21 +407,24 @@ imageInput.addEventListener("change", () => {
     originalPreview.src = sourceObjectUrl;
     originalPreview.classList.remove("hidden");
     originalEmpty.classList.add("hidden");
-    imageStatus.textContent = "Image loaded: " + img.naturalWidth + " × " + img.naturalHeight + ". Choose settings and tap Enhance Image.";
+    imageStatus.textContent =
+      "Loaded " + img.naturalWidth + " × " + img.naturalHeight +
+      " pixels. Select settings and tap Enhance Image.";
   };
   img.onerror = () => {
     sourceImage = null;
-    imageStatus.textContent = "Could not open this image. Please try another file.";
+    imageStatus.textContent = "Unable to open this image. Try another photo.";
   };
   img.src = sourceObjectUrl;
 });
 
 function sharpenCanvas(ctx, width, height, amount) {
   if (amount <= 0) return;
-  const imageData = ctx.getImageData(0, 0, width, height);
-  const src = imageData.data;
+
+  const data = ctx.getImageData(0, 0, width, height);
+  const src = data.data;
   const output = new Uint8ClampedArray(src);
-  const strength = amount * 0.22;
+  const strength = amount * 0.18;
 
   for (let y = 1; y < height - 1; y++) {
     for (let x = 1; x < width - 1; x++) {
@@ -302,57 +435,64 @@ function sharpenCanvas(ctx, width, height, amount) {
       const right = i + 4;
 
       for (let c = 0; c < 3; c++) {
-        output[i + c] = src[i + c] * (1 + 4 * strength) -
-          strength * (src[up + c] + src[down + c] + src[left + c] + src[right + c]);
+        output[i + c] =
+          src[i + c] * (1 + 4 * strength) -
+          strength * (
+            src[up + c] + src[down + c] +
+            src[left + c] + src[right + c]
+          );
       }
     }
   }
-  imageData.data.set(output);
-  ctx.putImageData(imageData, 0, 0);
+
+  data.data.set(output);
+  ctx.putImageData(data, 0, 0);
 }
 
-function canvasToBlob(canvas) {
+function toPNG(canvas) {
   return new Promise((resolve, reject) => {
-    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("Could not export the image.")), "image/png");
+    canvas.toBlob(blob => {
+      if (blob) resolve(blob);
+      else reject(new Error("PNG export failed."));
+    }, "image/png");
   });
 }
 
 enhanceBtn.addEventListener("click", async () => {
   if (processing) return;
   if (!sourceImage) {
-    imageStatus.textContent = "First choose an image.";
+    imageStatus.textContent = "Please choose a photo first.";
     return;
   }
 
   processing = true;
   enhanceBtn.disabled = true;
   downloadBtn.disabled = true;
-  imageStatus.textContent = "Enhancing image... Please wait.";
+  imageStatus.textContent = "Enhancing image. Please wait...";
 
   try {
     let width = sourceImage.naturalWidth;
     let height = sourceImage.naturalHeight;
-    const requested = resolution.value;
 
-    if (requested !== "original") {
-      const scale = Number(requested) / Math.max(width, height);
+    if (resolution.value !== "original") {
+      const scale = Number(resolution.value) / Math.max(width, height);
       width = Math.max(1, Math.round(width * scale));
       height = Math.max(1, Math.round(height * scale));
     }
 
-    // Allow up to 18 megapixels, subject to browser/device memory limits.
+    // 18-megapixel safety limit for phone memory.
     const maxPixels = 18000000;
     if (width * height > maxPixels) {
-      const safeScale = Math.sqrt(maxPixels / (width * height));
-      width = Math.max(1, Math.floor(width * safeScale));
-      height = Math.max(1, Math.floor(height * safeScale));
+      const scale = Math.sqrt(maxPixels / (width * height));
+      width = Math.floor(width * scale);
+      height = Math.floor(height * scale);
     }
 
     const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
     const ctx = canvas.getContext("2d", {willReadFrequently:true});
-    if (!ctx) throw new Error("Could not start image processing.");
+    if (!ctx) throw new Error("Canvas is unavailable.");
 
     ctx.filter =
       "saturate(" + Number(vibrance.value) / 100 + ") " +
@@ -362,7 +502,7 @@ enhanceBtn.addEventListener("click", async () => {
     ctx.filter = "none";
 
     sharpenCanvas(ctx, width, height, Number(sharpness.value));
-    resultBlob = await canvasToBlob(canvas);
+    resultBlob = await toPNG(canvas);
 
     if (resultObjectUrl) URL.revokeObjectURL(resultObjectUrl);
     resultObjectUrl = URL.createObjectURL(resultBlob);
@@ -372,11 +512,13 @@ enhanceBtn.addEventListener("click", async () => {
     downloadBtn.disabled = false;
 
     imageStatus.textContent =
-      "Done! Output: " + width + " × " + height + " pixels (" +
-      (width * height / 1000000).toFixed(1) + " MP). PNG size: " +
-      (resultBlob.size / 1024 / 1024).toFixed(2) + " MB.";
+      "SUCCESS: " + width + " × " + height + " pixels (" +
+      (width * height / 1000000).toFixed(1) + " MP). PNG: " +
+      (resultBlob.size / 1048576).toFixed(2) + " MB.";
   } catch (error) {
-    imageStatus.textContent = "Enhancement failed: " + error.message + " Try a smaller photo or lower resolution.";
+    imageStatus.textContent =
+      "Processing failed: " + error.message +
+      ". Try a smaller image or original resolution.";
   } finally {
     processing = false;
     enhanceBtn.disabled = false;
@@ -384,77 +526,77 @@ enhanceBtn.addEventListener("click", async () => {
 });
 
 downloadBtn.addEventListener("click", () => {
-  if (!resultBlob || !resultObjectUrl) return;
-  const link = document.createElement("a");
-  link.href = resultObjectUrl;
-  link.download = "3d-vision-ai-enhanced.png";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
+  if (!resultObjectUrl) return;
+  const a = document.createElement("a");
+  a.href = resultObjectUrl;
+  a.download = "3d-vision-ai-enhanced.png";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 });
 
-document.getElementById("resetBtn").addEventListener("click", () => {
+$("resetBtn").addEventListener("click", () => {
   vibrance.value = 150;
   contrast.value = 115;
   brightness.value = 105;
   sharpness.value = 1;
   resolution.value = "original";
   updateLabels();
-  imageStatus.textContent = sourceImage
-    ? "Settings reset. Tap Enhance Image to process again."
-    : "Settings reset — choose an image to get started.";
+  imageStatus.textContent = "Settings reset. Tap Enhance Image to process again.";
 });
 
-const modelImageInput = document.getElementById("modelImageInput");
-const generate3DBtn = document.getElementById("generate3DBtn");
-const modelStatus = document.getElementById("modelStatus");
-const modelViewer = document.getElementById("modelViewer");
-const modelDownloadLink = document.getElementById("modelDownloadLink");
+const modelImageInput = $("modelImageInput");
+const generate3DBtn = $("generate3DBtn");
+const modelStatus = $("modelStatus");
+const modelViewer = $("modelViewer");
+const modelDownloadLink = $("modelDownloadLink");
 
 generate3DBtn.addEventListener("click", async () => {
   const file = modelImageInput.files && modelImageInput.files[0];
-  const backendInput = document.getElementById("backendUrl").value.trim();
+  const backendInput = $("backendUrl").value.trim();
 
   if (!file) {
-    modelStatus.textContent = "Choose an image for 3D generation first.";
+    modelStatus.textContent = "Choose an image for 3D generation.";
     return;
   }
   if (!backendInput) {
-    modelStatus.textContent = "Enter your hosted backend URL first. GitHub Pages cannot run the 3D backend alone.";
+    modelStatus.textContent = "Enter your hosted backend URL first.";
     return;
   }
 
   let endpoint;
   try {
     endpoint = new URL(backendInput);
-    if (!["https:", "http:"].includes(endpoint.protocol)) throw new Error("Invalid URL");
+    if (!["https:", "http:"].includes(endpoint.protocol)) throw new Error();
     endpoint.pathname = endpoint.pathname.replace(/\/+$/, "") + "/generate";
   } catch {
-    modelStatus.textContent = "Enter a valid backend URL, including https://.";
+    modelStatus.textContent = "Enter a valid backend URL beginning with https://.";
     return;
   }
 
   generate3DBtn.disabled = true;
-  modelStatus.textContent = "Uploading image to your backend...";
+  modelStatus.textContent = "Sending image to backend...";
 
   try {
-    const formData = new FormData();
-    formData.append("image", file);
-    const response = await fetch(endpoint.href, {method:"POST", body:formData});
-    if (!response.ok) throw new Error("Backend returned HTTP " + response.status);
+    const form = new FormData();
+    form.append("image", file);
+    const response = await fetch(endpoint.href, {method:"POST", body:form});
+    if (!response.ok) throw new Error("Server returned HTTP " + response.status);
 
     const data = await response.json();
     const returnedUrl = data.model_url || data.glb_url || data.url;
-    if (!returnedUrl) throw new Error("Backend response did not contain a model URL.");
+    if (!returnedUrl) throw new Error("No model URL in server response.");
 
     const modelUrl = new URL(returnedUrl, endpoint.href).href;
     modelViewer.src = modelUrl;
     modelViewer.classList.remove("hidden");
     modelDownloadLink.href = modelUrl;
     modelDownloadLink.classList.remove("hidden");
-    modelStatus.textContent = "Model received! Rotate and zoom it in the viewer.";
+    modelStatus.textContent = "Model loaded. Rotate and zoom it in the viewer.";
   } catch (error) {
-    modelStatus.textContent = "Generation failed: " + error.message + ". Check your backend URL, CORS settings and API response format.";
+    modelStatus.textContent =
+      "3D generation failed: " + error.message +
+      ". Check backend availability and CORS settings.";
   } finally {
     generate3DBtn.disabled = false;
   }
