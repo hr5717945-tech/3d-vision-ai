@@ -4,11 +4,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
   <title>3D Vision AI</title>
-  <meta http-equiv="refresh" content="0; url=studio.html">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #111827;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 180px;
+      max-width: 75%;
+      height: auto;
+      object-fit: contain;
+      margin-bottom: 24px;
+      border-radius: 16px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin: 0 0 12px;
+      color: #38bdf8;
+    }
+
+    p {
+      color: #cbd5e1;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 14px 28px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 10px;
+    }
+
+    .button:hover {
+      background: #1d4ed8;
+    }
+
+    .loading {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  </style>
+
+  <script>
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        window.location.href = "studio.html";
+      }, 3000);
+    });
+  </script>
 </head>
+
 <body>
-  <p>Opening 3D Vision AI Studio...</p>
-  <a href="studio.html">Open Studio</a>
+
+  <img
+    class="logo"
+    src="Screenshot_2026-10-20-16-27-53-932-edit_com.android.chrome.jpg"
+    alt="3D Vision AI Logo"
+    onerror="this.style.display='none'"
+  >
+
+  <h1>3D Vision AI</h1>
+
+  <p>
+    Welcome to 3D Vision AI Studio.<br>
+    Turn your ideas into 3D creations.
+  </p>
+
+  <a class="button" href="studio.html">
+    Open 3D Studio
+  </a>
+
+  <div class="loading">
+    Opening your studio automatically...
+  </div>
+
 </body>
 </html>
