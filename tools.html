@@ -1,1 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090b1c">
+<meta name="description" content="3D Vision AI: seven useful online tools in one place.">
+<title>3D Vision AI — Smart Tools</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--bg:#080b18;--panel:#11172a;--panel2:#0b1122;--border:#293653;--cyan:#00e5ff;--purple:#a477ff;--text:#f4f7ff;--muted:#a8b4cf;--green:#62efb1;--red:#ff8585}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#1a2850 0%,var(--bg) 58%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{text-align:center;padding:30px 16px 20px}
+.logo{font-size:clamp(25px,6vw,38px);font-weight:900;letter-spacing:1px}.logo span{color:var(--cyan)}
+header p{max-width:650px;margin:12px auto;color:var(--muted);line-height:1.6}
+.status{display:inline-block;border:1px solid #23546a;border-radius:30px;padding:7px 12px;color:var(--cyan);font-size:12px}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 14px 22px}
+nav a{color:var(--text);text-decoration:none;background:#121a30;border:1px solid var(--border);padding:9px 11px;border-radius:10px;font-size:12px}
+.container{max-width:1150px;margin:auto;padding:0 15px 25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:17px}
+.card{min-width:0;padding:20px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,#151c32,#101426);box-shadow:0 10px 32px #0003;scroll-margin-top:15px}
+.card h2{font-size:19px;margin:0 0 8px}.desc{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 15px}
+.number{display:inline-grid;place-items:center;width:29px;height:29px;margin-right:7px;border-radius:9px;background:#073440;color:var(--cyan);font-size:13px;vertical-align:middle}
+label{display:block;margin-top:10px;color:var(--muted);font-size:12px}
+input,select,textarea{display:block;width:100%;min-width:0;padding:12px;margin:8px 0;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);font:inherit;font-size:14px}
+textarea{min-height:100px;resize:vertical;line-height:1.5}
+input:focus,select:focus,textarea:focus{outline:1px solid var(--cyan);border-color:var(--cyan)}
+button{width:100%;border:0;border-radius:10px;padding:12px;margin-top:8px;background:linear-gradient(100deg,var(--cyan),#91b0ff);color:#06101b;font-size:14px;font-weight:800;cursor:pointer}
+button.secondary{color:var(--text);background:#252f4a;border:1px solid #3a4968}button:hover{filter:brightness(1.08)}button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.result{min-height:40px;margin-top:12px;padding:12px;background:#090e20;border:1px solid #27334e;border-radius:10px;overflow-wrap:anywhere;white-space:pre-wrap;line-height:1.55;font-size:14px}
+.result:empty{display:none}.muted{color:var(--muted);font-size:12px;line-height:1.5}.good{color:var(--green)}.error{color:var(--red)}
+#qrResult{display:flex;justify-content:center;align-items:center;padding:12px;margin-top:12px;border-radius:10px;background:#fff}
+#qrResult:empty{display:none}#qrResult img,#qrResult canvas{max-width:100%;height:auto}
+footer{text-align:center;padding:25px 15px;color:var(--muted);font-size:12px;line-height:1.8}
+@media(max-width:400px){.card{padding:15px}.row{gap:6px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">3D VISION <span>AI</span></div>
+  <p>Seven smart tools in one place. Simple, mobile-friendly utilities for everyday tasks.</p>
+  <div class="status">7 SMART TOOLS · ONLINE FEATURES NEED INTERNET</div>
+</header>
+<nav>
+  <a href="#calculator">Calculator</a><a href="#translator">Translator</a><a href="#qr">QR Code</a><a href="#pdf">Text to PDF</a><a href="#password">Password</a><a href="#units">Unit Converter</a><a href="#currency">Currency</a>
+</nav>
+<main class="container">
+<div class="grid">
 
+<section class="card" id="calculator">
+<h2><span class="number">1</span>Smart Calculator</h2>
+<p class="desc">Calculate arithmetic expressions with parentheses, decimals, and percentages.</p>
+<label for="calcInput">Expression</label>
+<input id="calcInput" inputmode="decimal" placeholder="Example: (25 + 5) * 2 / 3">
+<div class="row"><button id="calcBtn">Calculate</button><button class="secondary" id="calcClear">Clear</button></div>
+<div class="result" id="calcResult" aria-live="polite"></div>
+<p class="muted">Supported: + − × ÷, parentheses, decimals, and % as percentage (e.g. 10% = 0.1).</p>
+</section>
+
+<section class="card" id="translator">
+<h2><span class="number">2</span>Language Translator</h2>
+<p class="desc">Translate between English, Urdu, and many other languages using an online translation service.</p>
+<label for="translateText">Text to translate</label>
+<textarea id="translateText" placeholder="Type or paste your text here"></textarea>
+<div class="row">
+<div><label for="translateFrom">From</label><select id="translateFrom"><option value="auto">Detect language</option><option value="en">English</option><option value="ur">Urdu</option><option value="ar">Arabic</option><option value="fr">French</option><option value="de">German</option><option value="es">Spanish</option><option value="it">Italian</option><option value="tr">Turkish</option><option value="zh">Chinese</option><option value="hi">Hindi</option><option value="ru">Russian</option><option value="ja">Japanese</option><option value="pt">Portuguese</option><option value="id">Indonesian</option></select></div>
+<div><label for="translateTo">To</label><select id="translateTo"><option value="ur">Urdu</option><option value="en">English</option><option value="ar">Arabic</option><option value="fr">French</option><option value="de">German</option><option value="es">Spanish</option><option value="it">Italian</option><option value="tr">Turkish</option><option value="zh">Chinese</option><option value="hi">Hindi</option><option value="ru">Russian</option><option value="ja">Japanese</option><option value="pt">Portuguese</option><option value="id">Indonesian</option></select></div>
+</div>
+<button id="translateBtn">Translate Online</button>
+<div class="result" id="translateResult" aria-live="polite"></div>
+<button class="secondary" id="copyTranslation">Copy Translation</button>
+<p class="muted">Translation is sent to an external service. Avoid entering sensitive personal information.</p>
+</section>
+
+<section class="card" id="qr">
+<h2><span class="number">3</span>QR Code Generator</h2>
+<p class="desc">Make a QR code from a website link, text, or other short content.</p>
+<label for="qrText">Text or URL</label><textarea id="qrText" placeholder="https://example.com"></textarea>
+<label for="qrSize">QR code size</label><select id="qrSize"><option value="160">160 × 160</option><option value="220" selected>220 × 220</option><option value="300">300 × 300</option></select>
+<button id="makeQR">Generate QR Code</button>
+<div id="qrResult"></div>
+<button class="secondary" id="downloadQR">Download QR Image</button>
+</section>
+
+<section class="card" id="pdf">
+<h2><span class="number">4</span>Text to PDF</h2>
+<p class="desc">Turn plain text into a downloadable PDF document.</p>
+<label for="pdfTitle">Document title</label><input id="pdfTitle" placeholder="My Document">
+<label for="pdfText">Document text</label><textarea id="pdfText" style="min-height:170px" placeholder="Write or paste your document here..."></textarea>
+<button id="makePDF">Create and Download PDF</button>
+<p class="muted">Basic Latin text is supported. Urdu, Arabic, and other complex scripts may need an embedded Unicode font for correct PDF rendering.</p>
+</section>
+
+<section class="card" id="password">
+<h2><span class="number">5</span>Password Generator</h2>
+<p class="desc">Create a random password on your device.</p>
+<label for="passLength">Password length: <strong id="passLengthLabel">16</strong></label>
+<input type="range" id="passLength" min="8" max="64" value="16">
+<label><input type="checkbox" id="passLower" checked style="display:inline;width:auto;margin-right:7px">Lowercase letters (a–z)</label>
+<label><input type="checkbox" id="passUpper" checked style="display:inline;width:auto;margin-right:7px">Uppercase letters (A–Z)</label>
+<label><input type="checkbox" id="passNumbers" checked style="display:inline;width:auto;margin-right:7px">Numbers (0–9)</label>
+<label><input type="checkbox" id="passSymbols" checked style="display:inline;width:auto;margin-right:7px">Symbols (!@#$...)</label>
+<button id="makePassword">Generate Password</button>
+<input id="passOutput" readonly placeholder="Your password appears here">
+<button class="secondary" id="copyPassword">Copy Password</button>
+<div class="result" id="passMessage" aria-live="polite"></div>
+</section>
+
+<section class="card" id="units">
+<h2><span class="number">6</span>Universal Unit Converter</h2>
+<p class="desc">Convert length, weight, temperature, volume, and speed.</p>
+<label for="unitCategory">Category</label><select id="unitCategory"><option value="length">Length</option><option value="weight">Weight / Mass</option><option value="temperature">Temperature</option><option value="volume">Volume</option><option value="speed">Speed</option></select>
+<label for="unitAmount">Amount</label><input id="unitAmount" type="number" step="any" value="1">
+<div class="row"><div><label for="unitFrom">From</label><select id="unitFrom"></select></div><div><label for="unitTo">To</label><select id="unitTo"></select></div></div>
+<button id="convertUnit">Convert Units</button>
+<div class="result" id="unitResult" aria-live="polite"></div>
+</section>
+
+<section class="card" id="currency">
+<h2><span class="number">7</span>Global Currency Converter</h2>
+<p class="desc">Convert between currencies supported by the online exchange-rate provider, including USD, PKR, EUR, GBP, SAR, AED, INR, JPY, CAD, and AUD where available.</p>
+<label for="currencyAmount">Amount</label><input id="currencyAmount" type="number" min="0" step="any" value="1" inputmode="decimal">
+<div class="row"><div><label for="currencyFrom">From currency</label><select id="currencyFrom"><option>Loading currencies…</option></select></div><div><label for="currencyTo">To currency</label><select id="currencyTo"><option>Loading currencies…</option></select></div></div>
+<div class="row"><button class="secondary" id="currencySwap">⇄ Swap</button><button id="currencyConvert">Convert</button></div>
+<div class="result" id="currencyResult" aria-live="polite">Loading supported currencies…</div>
+<p class="muted" id="currencyUpdated">Rates are fetched online when you convert. Rates may differ from bank or cash-exchange rates.</p>
+</section>
+
+</div>
+</main>
+<footer>3D Vision AI · Smart Tools<br>Some tools use external online services and third-party libraries.</footer>
+
+<script>
+"use strict";
+
+/* 1. SMART CALCULATOR
+   A small parser is used instead of eval() so arbitrary JavaScript cannot run. */
+(function(){
+ const input=document.getElementById("calcInput"), output=document.getElementById("calcResult");
+ function calculate(source){
+  let s=source.replace(/\s+/g,"").replace(/[×x]/gi,"*").replace(/÷/g,"/");
+  if(!s)throw Error("Enter a calculation first.");
+  if(!/^[0-9+\-*/().%]+$/.test(s))throw Error("Use numbers and +, −, ×, ÷, %, or parentheses only.");
+  let i=0;
+  function expression(){let v=term();while(s[i]==="+"||s[i]==="-"){let op=s[i++],r=term();v=op==="+"?v+r:v-r;}return v;}
+  function term(){let v=unary();while(s[i]==="*"||s[i]==="/"){let op=s[i++],r=unary();if(op==="/"&&r===0)throw Error("Cannot divide by zero.");v=op==="*"?v*r:v/r;}return v;}
+  function unary(){if(s[i]==="+"){i++;return unary();}if(s[i]==="-"){i++;return -unary();}return postfix();}
+  function postfix(){let v=primary();while(s[i]==="%"){i++;v/=100;}return v;}
+  function primary(){
+   if(s[i]==="("){i++;let v=expression();if(s[i]!==")")throw Error("Missing closing parenthesis.");i++;return v;}
+   let start=i;while(i<s.length&&/[0-9.]/.test(s[i]))i++;
+   if(start===i)throw Error("Check the expression.");
+   let v=Number(s.slice(start,i));if(!Number.isFinite(v))throw Error("Invalid number.");return v;
+  }
+  let result=expression();if(i!==s.length)throw Error("Check the expression.");
+  if(!Number.isFinite(result))throw Error("Result is not finite.");
+  return result;
+ }
+ document.getElementById("calcBtn").addEventListener("click",()=>{try{output.textContent="Result: "+new Intl.NumberFormat(undefined,{maximumFractionDigits:12}).format(calculate(input.value));output.className="result good";}catch(e){output.textContent=e.message;output.className="result error";}});
+ document.getElementById("calcClear").addEventListener("click",()=>{input.value="";output.textContent="";});
+ input.addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("calcBtn").click();});
+})();
+
+/* 2. TRANSLATOR — MyMemory public endpoint. */
+(function(){
+ const btn=document.getElementById("translateBtn"), input=document.getElementById("translateText"), output=document.getElementById("translateResult");
+ btn.addEventListener("click",async()=>{
+  const text=input.value.trim(), from=document.getElementById("translateFrom").value, to=document.getElementById("translateTo").value;
+  if(!text){output.textContent="Enter text to translate.";output.className="result error";return;}
+  if(from!=="auto"&&from===to){output.textContent="Choose two different languages.";output.className="result error";return;}
+  btn.disabled=true;output.textContent="Translating…";output.className="result";
+  try{
+   const langpair=encodeURIComponent((from==="auto"?"autodetect":from)+"|"+to);
+   const url="https://api.mymemory.translated.net/get?q="+encodeURIComponent(text)+"&langpair="+langpair;
+   const response=await fetch(url);if(!response.ok)throw Error("Translation service unavailable.");
+   const data=await response.json();
+   if(data.responseStatus!==200||!data.responseData?.translatedText)throw Error(data.responseDetails||"Translation failed.");
+   output.textContent=data.responseData.translatedText;output.className="result good";
+  }catch(e){output.textContent="Translation failed. Check your internet connection or try shorter text. "+e.message;output.className="result error";}
+  finally{btn.disabled=false;}
+ });
+ document.getElementById("copyTranslation").addEventListener("click",async()=>{
+  const text=output.textContent;if(!text){output.textContent="Translate some text first.";return;}
+  try{await navigator.clipboard.writeText(text);output.textContent=text+"\n\nCopied to clipboard.";}
+  catch(e){output.textContent=text+"\n\nClipboard access is unavailable; select and copy the text manually.";}
+ });
+})();
+
+/* 3. QR CODE GENERATOR */
+(function(){
+ const input=document.getElementById("qrText"), result=document.getElementById("qrResult");
+ document.getElementById("makeQR").addEventListener("click",()=>{
+  const value=input.value.trim();result.replaceChildren();
+  if(!value){result.textContent="";alert("Enter text or a URL first.");return;}
+  if(!window.QRCode){alert("QR library could not load. Check your internet connection.");return;}
+  new QRCode(result,{text:value,width:Number(document.getElementById("qrSize").value),height:Number(document.getElementById("qrSize").value),correctLevel:QRCode.CorrectLevel.H});
+ });
+ document.getElementById("downloadQR").addEventListener("click",()=>{
+  const canvas=result.querySelector("canvas");const img=result.querySelector("img");
+  let url;if(canvas)url=canvas.toDataURL("image/png");else if(img&&img.src)url=img.src;else{alert("Generate a QR code first.");return;}
+  const a=document.createElement("a");a.href=url;a.download="3d-vision-ai-qr.png";document.body.appendChild(a);a.click();a.remove();
+ });
+})();
+
+/* 4. TEXT TO PDF */
+(function(){
+ document.getElementById("makePDF").addEventListener("click",()=>{
+  const text=document.getElementById("pdfText").value;
+  const title=document.getElementById("pdfTitle").value.trim()||"My Document";
+  if(!text.trim()){alert("Enter some text for your PDF.");return;}
+  if(!window.jspdf?.jsPDF){alert("PDF library could not load. Check your internet connection.");return;}
+  const pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4"});
+  const margin=15,pageWidth=180,lineHeight=7;
+  pdf.setFont("helvetica","bold");pdf.setFontSize(16);
+  const titleLines=pdf.splitTextToSize(title,pageWidth);pdf.text(titleLines,margin,20);
+  let y=20+titleLines.length*8+5;
+  pdf.setFont("helvetica","normal");pdf.setFontSize(11);
+  const lines=pdf.splitTextToSize(text,pageWidth);
+  const pageHeight=pdf.internal.pageSize.getHeight();
+  for(const line of lines){if(y>pageHeight-margin){pdf.addPage();y=margin;}pdf.text(line,margin,y);y+=lineHeight;}
+  pdf.save(title.replace(/[\\/:*?"<>|]+/g,"_").slice(0,80)+".pdf");
+ });
+})();
+
+/* 5. PASSWORD GENERATOR */
+(function(){
+ const length=document.getElementById("passLength"), label=document.getElementById("passLengthLabel"), output=document.getElementById("passOutput"), message=document.getElementById("passMessage");
+ length.addEventListener("input",()=>label.textContent=length.value);
+ document.getElementById("makePassword").addEventListener("click",()=>{
+  const groups=[];
+  if(document.getElementById("passLower").checked)groups.push("abcdefghijklmnopqrstuvwxyz");
+  if(document.getElementById("passUpper").checked)groups.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  if(document.getElementById("passNumbers").checked)groups.push("0123456789");
+  if(document.getElementById("passSymbols").checked)groups.push("!@#$%^&*()-_=+[]{};:,.?");
+  if(!groups.length){message.textContent="Select at least one character type.";message.className="result error";return;}
+  if(!window.crypto||!crypto.getRandomValues){message.textContent="Secure random generation is unavailable in this browser.";message.className="result error";return;}
+  const randomIndex=max=>{const arr=new Uint32Array(1);crypto.getRandomValues(arr);return arr[0]%max;};
+  const chars=groups.map(g=>g[randomIndex(g.length)]);
+  const all=groups.join("");
+  while(chars.length<Number(length.value))chars.push(all[randomIndex(all.length)]);
+  for(let i=chars.length-1;i>0;i--){const j=randomIndex(i+1);[chars[i],chars[j]]=[chars[j],chars[i]];}
+  output.value=chars.join("");message.textContent="Password generated. Store it somewhere safe.";message.className="result good";
+ });
+ document.getElementById("copyPassword").addEventListener("click",async()=>{
+  if(!output.value){message.textContent="Generate a password first.";message.className="result error";return;}
+  try{await navigator.clipboard.writeText(output.value);message.textContent="Password copied.";message.className="result good";}
+  catch(e){output.select();message.textContent="Select the password and copy it manually.";}
+ });
+})();
+
+/* 6. UNIT CONVERTER */
+(function(){
+ const definitions={
+  length:{"Millimeters":.001,"Centimeters":.01,"Meters":1,"Kilometers":1000,"Inches":.0254,"Feet":.3048,"Yards":.9144,"Miles":1609.344},
+  weight:{"Milligrams":.000001,"Grams":.001,"Kilograms":1,"Metric tonnes":1000,"Ounces":.028349523125,"Pounds":.45359237,"Stones":6.35029318},
+  volume:{"Milliliters":.001,"Liters":1,"Cubic meters":1000,"US teaspoons":.00492892159375,"US tablespoons":.01478676478125,"US fluid ounces":.0295735295625,"US cups":.2365882365,"US pints":.473176473,"US quarts":.946352946,"US gallons":3.785411784},
+  speed:{"Meters/second":1,"Kilometers/hour":1/3.6,"Miles/hour":.44704,"Feet/second":.3048,"Knots":.5144444444}
+ };
+ const category=document.getElementById("unitCategory"), from=document.getElementById("unitFrom"), to=document.getElementById("unitTo"), amount=document.getElementById("unitAmount"), result=document.getElementById("unitResult");
+ function fill(){
+  const key=category.value, units=key==="temperature"?["Celsius","Fahrenheit","Kelvin"]:Object.keys(definitions[key]);
+  for(const select of [from,to]){select.replaceChildren();units.forEach((u,i)=>select.add(new Option(u,u)));}
+  if(key==="length"){from.value="Inches";to.value="Centimeters";}
+  else if(key==="weight"){from.value="Pounds";to.value="Kilograms";}
+  else if(key==="temperature"){from.value="Celsius";to.value="Fahrenheit";}
+  else if(key==="volume"){from.value="Liters";to.value="US gallons";}
+  else{from.value="Kilometers/hour";to.value="Miles/hour";}
+  convert();
+ }
+ function convertTemp(v,u){if(u==="Celsius")return v;if(u==="Fahrenheit")return(v-32)*5/9;return v-273.15;}
+ function tempFromC(c,u){if(u==="Celsius")return c;if(u==="Fahrenheit")return c*9/5+32;return c+273.15;}
+ function convert(){
+  const v=Number(amount.value);if(amount.value.trim()===""||!Number.isFinite(v)){result.textContent="Enter a valid number.";result.className="result error";return;}
+  let out;
+  if(category.value==="temperature"){out=tempFromC(convertTemp(v,from.value),to.value);}
+  else{out=v*definitions[category.value][from.value]/definitions[category.value][to.value];}
+  if(!Number.isFinite(out)){result.textContent="Cannot convert this value.";result.className="result error";return;}
+  result.textContent=`${new Intl.NumberFormat(undefined,{maximumFractionDigits:8}).format(v)} ${from.value} = ${new Intl.NumberFormat(undefined,{maximumFractionDigits:8}).format(out)} ${to.value}`;
+  result.className="result good";
+ }
+ category.addEventListener("change",fill);document.getElementById("convertUnit").addEventListener("click",convert);
+ from.addEventListener("change",convert);to.addEventListener("change",convert);amount.addEventListener("input",convert);
+ fill();
+})();
+
+/* 7. GLOBAL CURRENCY CONVERTER — fetches the provider's supported currencies and latest available rates. */
+(function(){
+ const API="https://api.frankfurter.dev/v1";
+ const amount=document.getElementById("currencyAmount"),from=document.getElementById("currencyFrom"),to=document.getElementById("currencyTo"),result=document.getElementById("currencyResult"),updated=document.getElementById("currencyUpdated"),convertBtn=document.getElementById("currencyConvert"),swapBtn=document.getElementById("currencySwap");
+ function message(text,error=false){result.textContent=text;result.className="result "+(error?"error":"good");}
+ function fmt(n,c){try{return new Intl.NumberFormat(undefined,{style:"currency",currency:c,maximumFractionDigits:6}).format(n);}catch(e){return n.toLocaleString()+" "+c;}}
+ async function load(){
+  try{
+   const r=await fetch(API+"/currencies");if(!r.ok)throw Error("Currency list unavailable.");
+   const currencies=await r.json(),codes=Object.keys(currencies).sort();if(!codes.length)throw Error("Empty currency list.");
+   [from,to].forEach(select=>{select.replaceChildren();codes.forEach(code=>select.add(new Option(code+" — "+currencies[code],code)));});
+   from.value=codes.includes("USD")?"USD":codes[0];to.value=codes.includes("PKR")?"PKR":(codes.find(c=>c!==from.value)||codes[0]);
+   message("Choose currencies and tap Convert.");updated.textContent="Rates are fetched online when you convert.";
+  }catch(e){message("Couldn't load currencies. Check your internet connection and reload the page.",true);updated.textContent="The online exchange-rate service may be unavailable.";convertBtn.disabled=true;swapBtn.disabled=true;}
+ }
+ async function convert(){
+  const n=Number(amount.value),a=from.value,b=to.value;
+  if(amount.value.trim()===""||!Number.isFinite(n)||n<0){message("Enter a valid amount of zero or more.",true);return;}
+  if(!a||!b){message("Wait for the currency list to load.",true);return;}
+  if(a===b){message(fmt(n,a)+" = "+fmt(n,b)+"\nBoth currencies are the same.");updated.textContent="No exchange rate is needed.";return;}
+  convertBtn.disabled=true;message("Getting the latest available rate…");updated.textContent="";
+  try{
+   const r=await fetch(`${API}/latest?base=${encodeURIComponent(a)}&symbols=${encodeURIComponent(b)}`);
+   if(!r.ok)throw Error("Rate unavailable.");
+   const data=await r.json(),rate=data.rates&&data.rates[b];
+   if(typeof rate!=="number"||!Number.isFinite(rate))throw Error("This currency pair is not supported.");
+   message(`${fmt(n,a)} = ${fmt(n*rate,b)}\n\n1 ${a} = ${new Intl.NumberFormat(undefined,{maximumFractionDigits:8}).format(rate)} ${b}\n1 ${b} = ${new Intl.NumberFormat(undefined,{maximumFractionDigits:8}).format(1/rate)} ${a}`);
+   updated.textContent=`Rate date: ${data.date||"not provided"}. Source: Frankfurter. Rates are indicative and may differ from bank or cash-exchange rates.`;
+  }catch(e){message("Conversion failed. Check your connection or try another currency pair. Some currencies may not be supported by this provider.",true);updated.textContent="No rate was estimated; please try again later.";}
+  finally{convertBtn.disabled=false;}
+ }
+ convertBtn.addEventListener("click",convert);
+ swapBtn.addEventListener("click",()=>{const old=from.value;from.value=to.value;to.value=old;convert();});
+ amount.addEventListener("keydown",e=>{if(e.key==="Enter")convert();});
+ load();
+})();
+</script>
+</body>
+</html>
