@@ -2,105 +2,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111827">
-  <title>3D Vision AI</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #111827;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .logo {
-      width: 180px;
-      max-width: 75%;
-      height: auto;
-      object-fit: contain;
-      margin-bottom: 24px;
-      border-radius: 16px;
-    }
-
-    h1 {
-      font-size: 32px;
-      margin: 0 0 12px;
-      color: #38bdf8;
-    }
-
-    p {
-      color: #cbd5e1;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 14px 28px;
-      background: #2563eb;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 10px;
-    }
-
-    .button:hover {
-      background: #1d4ed8;
-    }
-
-    .loading {
-      margin-top: 16px;
-      font-size: 13px;
-      color: #94a3b8;
-    }
-  </style>
-
-  <script>
-    window.addEventListener("load", function () {
-      setTimeout(function () {
-        window.location.href = "studio.html";
-      }, 3000);
-    });
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b1c">
+<title>3D Vision AI</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;padding:24px;
+ font-family:Arial,sans-serif;color:#fff;
+ background:linear-gradient(145deg,#090b1c,#111b36,#071c2b);
+ display:flex;align-items:center;justify-content:center;
+}
+main{width:100%;max-width:850px;text-align:center}
+.logo{font-size:48px;margin-bottom:12px}
+h1{font-size:clamp(32px,7vw,52px);margin:8px 0;color:#67e8f9}
+.intro{color:#cbd5e1;line-height:1.7;margin-bottom:32px}
+.options{display:grid;grid-template-columns:1fr;gap:20px}
+.option{
+ display:block;text-decoration:none;color:#fff;text-align:left;
+ padding:26px;border:1px solid #334766;border-radius:22px;
+ background:rgba(20,35,62,.85);
+ transition:transform .2s,border-color .2s;
+}
+.option:hover{transform:translateY(-3px);border-color:#67e8f9}
+.symbol{font-size:42px}
+h2{margin:14px 0 8px;font-size:24px}
+.desc{color:#cbd5e1;line-height:1.6;margin:0 0 20px}
+.link{display:inline-block;background:#0891b2;padding:12px 18px;
+ border-radius:10px;font-weight:bold}
+footer{margin-top:30px;color:#94a3b8;font-size:13px}
+@media(min-width:620px){
+ .options{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
-
 <body>
+<main>
+ <div class="logo">✦</div>
+ <h1>3D Vision AI</h1>
+ <p class="intro">
+  Welcome to your AI creative space.<br>
+  Choose one of the options below to get started.
+ </p>
 
-  <img
-    class="logo"
-    src="Screenshot_2026-10-20-16-27-53-932-edit_com.android.chrome.jpg"
-    alt="3D Vision AI Logo"
-    onerror="this.style.display='none'"
-  >
-
-  <h1>3D Vision AI</h1>
-
-  <p>
-    Welcome to 3D Vision AI Studio.<br>
-    Turn your ideas into 3D creations.
-  </p>
-
-  <a class="button" href="studio.html">
-    Open 3D Studio
+ <section class="options">
+  <a class="option" href="studio.html">
+   <div class="symbol">🖼️</div>
+   <h2>Image Enhancer</h2>
+   <p class="desc">
+    Open your existing Studio to access image enhancement
+    and your available creative features.
+   </p>
+   <span class="link">Open Image Enhancer →</span>
   </a>
 
-  <div class="loading">
-    Opening your studio automatically...
-  </div>
+  <a class="option" href="tools.html">
+   <div class="symbol">🧰</div>
+   <h2>7 Best Tools</h2>
+   <p class="desc">
+    Access your calculator, translator, QR generator,
+    PDF converter, password generator, unit converter,
+    and currency converter.
+   </p>
+   <span class="link">Explore 7 Tools →</span>
+  </a>
+ </section>
 
+ <footer>3D Vision AI · Create, enhance and explore</footer>
+</main>
 </body>
 </html>
